@@ -10,7 +10,7 @@ public abstract class MonsterAI : MonoBehaviour
 
     protected virtual void Awake() {
         Init();
-        StartCoroutine(BehaviourProcess());
+        StartProcess();
     }
     private void Init() {
         monster = GetComponent<Monster>();
@@ -18,6 +18,13 @@ public abstract class MonsterAI : MonoBehaviour
     }
     // AI √ ±‚»≠
     protected abstract void InitAI(BTSequence root);
+    public void StartProcess() {
+        StopAllCoroutines();
+        StartCoroutine(BehaviourProcess());
+    }
+    public void StopProcess() {
+        StopAllCoroutines();
+    }
     IEnumerator BehaviourProcess() {
         while (true) {
             root.Invoke();

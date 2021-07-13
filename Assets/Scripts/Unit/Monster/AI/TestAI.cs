@@ -10,14 +10,16 @@ public class TestAI : MonsterAI
 
     AttackTarget AttackPlayer;
     DebugMonster BTDebug;
+    AttackCore Attackcore;
     protected override void InitAI(BTSequence root) {
         root.AddChild(selector);
         root.AddChild(selector2);
 
         AttackPlayer = new AttackTarget(monster, 10, 5, 1 << LayerMask.NameToLayer("Player"));
+        Attackcore = new AttackCore(monster);
         BTDebug = new DebugMonster();
 
         selector.AddChild(AttackPlayer);
-        selector.AddChild(BTDebug);
+        selector.AddChild(Attackcore);
     }
 }

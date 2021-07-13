@@ -10,6 +10,8 @@ public class SOUnit : ScriptableObject
     public float Speed => speed;
     [SerializeField] float rotateSpeed;
     public float RotateSpeed => rotateSpeed;
+    [SerializeField] float attackRange;
+    public float AttackRange => attackRange;
     [SerializeField] Sprite minimapIcon;
     public Sprite MinimapIcon => minimapIcon;
 }

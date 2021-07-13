@@ -27,10 +27,16 @@ namespace BT {
                 FIndTarget = true;
 
                 Transform trans = hit[0].collider.transform;
-                Vector3 dir3 = (trans.position - unit.transform.position).normalized;
-                Vector3 dir2 = new Vector3(dir3.x, 0, dir3.z);
-                unit.Move(dir2);
-                unit.Rotate(trans);
+                float dst = Vector2.Distance(unit.GetVec2Position(), new Vector2(trans.position.x, trans.position.z));
+
+                if (dst >= unit.AttackRange) {
+                    Vector3 dir3 = (trans.position - unit.transform.position).normalized;
+                    Vector3 dir2 = new Vector3(dir3.x, 0, dir3.z);
+                    unit.Move(dir2);
+                    unit.Rotate(trans);
+                }
+                else
+                    unit.Attack();
                 return true;
             }
             else {
@@ -41,21 +47,22 @@ namespace BT {
         public override void DrawGizmos() {
             Color gizmoColor = FIndTarget ? Color.green : Color.red;
             Gizmos.color = gizmoColor;
-            DrawWireCicle(unit.transform.position, 30);
+            MyGizmos.DrawWireCicle(unit.transform.position, sensingRange, 30);
         }
-
-        void DrawWireCicle(Vector3 center, int smoothNum) {
-            int angle = 360 / smoothNum;
-            Vector3[] dir = new Vector3[smoothNum];
-            dir[0] = center + new Vector3(Mathf.Cos(0), 0, Mathf.Sin(0)) * sensingRange;
-            for (int i = 1; i < smoothNum; i++) {
-                float dirAngle = angle * i;
-                dirAngle *= Mathf.Deg2Rad;
-                Vector3 dirvec = new Vector3(Mathf.Cos(dirAngle), 0, Mathf.Sin(dirAngle)) * sensingRange;
-                dir[i] = center + dirvec;
-                Gizmos.DrawLine(dir[i - 1], dir[i]);
-            }
-            Gizmos.DrawLine(dir[smoothNum - 1], dir[0]);
+    }
+}
+public static class MyGizmos {
+    public static void DrawWireCicle(Vector3 center,float radius, int smoothNum) {
+        int angle = 360 / smoothNum;
+        Vector3[] dir = new Vector3[smoothNum];
+        dir[0] = center + new Vector3(Mathf.Cos(0), 0, Mathf.Sin(0)) * radius;
+        for (int i = 1; i < smoothNum; i++) {
+            float dirAngle = angle * i;
+            dirAngle *= Mathf.Deg2Rad;
+            Vector3 dirvec = new Vector3(Mathf.Cos(dirAngle), 0, Mathf.Sin(dirAngle)) * radius;
+            dir[i] = center + dirvec;
+            Gizmos.DrawLine(dir[i - 1], dir[i]);
         }
+        Gizmos.DrawLine(dir[smoothNum - 1], dir[0]);
     }
 }
