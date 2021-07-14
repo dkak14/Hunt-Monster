@@ -4,7 +4,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SOUnit", menuName = "SO/Unit", order = 0)]
 public class SOUnit : ScriptableObject
 {
-    [SerializeField]int maxHp;
+    [SerializeField] Sprite minimapIcon;
+    public Sprite MinimapIcon => minimapIcon;
+    [SerializeField] int maxHp;
     public int MaxHP => maxHp;
     [SerializeField] float speed;
     public float Speed => speed;
@@ -12,6 +14,4 @@ public class SOUnit : ScriptableObject
     public float RotateSpeed => rotateSpeed;
     [SerializeField] float attackRange;
     public float AttackRange => attackRange;
-    [SerializeField] Sprite minimapIcon;
-    public Sprite MinimapIcon => minimapIcon;
 }

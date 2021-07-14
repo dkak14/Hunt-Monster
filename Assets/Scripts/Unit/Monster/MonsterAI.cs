@@ -10,6 +10,8 @@ public abstract class MonsterAI : MonoBehaviour
 
     protected virtual void Awake() {
         Init();
+    }
+    protected virtual void Start() {
         StartProcess();
     }
     private void Init() {
