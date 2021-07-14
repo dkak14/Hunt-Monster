@@ -62,15 +62,13 @@ public class JoyStickController : MonoBehaviour, IBeginDragHandler, IDragHandler
     }
 
     private void ControlJoystickLever(PointerEventData eventData) {
-        var inputPos = rectTransform.anchoredPosition.x > 0 ? eventData.position - rectTransform.anchoredPosition : eventData.position;
+        var inputPos = rectTransform.position.x > 0 ? eventData.position - rectTransform.anchoredPosition : eventData.position;
         var inputVector = inputPos.magnitude < leverRange ? inputPos : inputPos.normalized * leverRange;
         lever.anchoredPosition = inputVector;
         inputDir = inputVector / leverRange;
     }
 
     private void InputControlVector() {
-        //find, getcomponent 업뎃때 쓰기에는 부담
-        GameObject.Find("Player").GetComponent<Character_Move>().Move(inputDir);
     }
 
     void Update() {
