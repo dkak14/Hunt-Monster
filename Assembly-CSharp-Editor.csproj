@@ -56,9 +56,13 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="Assets\Scripts\Editor\MonsterSpawnerEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\ZoneEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\MonsterEditor.cs" />
+=======
+    <Compile Include="Assets\Scripts\Unit\Monster\Editor\MonsterAIEditor.cs" />
+>>>>>>> origin/main
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

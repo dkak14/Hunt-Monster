@@ -9,7 +9,11 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
+<<<<<<< HEAD
     <ProjectGuid>{30933387-1A46-61B6-719E-C9BFC4ED0068}</ProjectGuid>
+=======
+    <ProjectGuid>{4B30E209-87DE-BC8C-EE8C-6063D8087672}</ProjectGuid>
+>>>>>>> origin/main
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -58,11 +62,16 @@
   <ItemGroup>
     <Compile Include="Assets\Script\TargetCamera.cs" />
     <Compile Include="Assets\Scripts\Unit\Monster\AI\TestAI.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="Assets\Script\Weapon_Unit.cs" />
+>>>>>>> origin/main
     <Compile Include="Assets\Scripts\Unit\BT\DebugMonster.cs" />
     <Compile Include="Assets\Scripts\Unit\Monster\MonsterAI.cs" />
     <Compile Include="Assets\Scripts\Unit\BT\BTNode.cs" />
     <Compile Include="Assets\Scripts\SO\SOStageMonster.cs" />
     <Compile Include="Assets\Scripts\Singleton.cs" />
+<<<<<<< HEAD
     <Compile Include="Assets\Scripts\Unit\Player.cs" />
     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
     <Compile Include="Assets\Script\JoyStickController.cs" />
@@ -76,10 +85,19 @@
     <Compile Include="Assets\Scripts\Unit\BT\MoveMonster.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\UI\PlayerHPbar.cs" />
+=======
+    <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
+    <Compile Include="Assets\Script\JoyStickController.cs" />
+    <Compile Include="Assets\Scripts\Unit\BT\AttackCore.cs" />
+    <Compile Include="Assets\Scripts\SO\SOMonster.cs" />
+    <Compile Include="Assets\Scripts\Unit\Monster\MonsterController.cs" />
+    <Compile Include="Assets\Scripts\Unit\BT\MoveMonster.cs" />
+>>>>>>> origin/main
     <Compile Include="Assets\Scripts\SO\SOUnit.cs" />
     <Compile Include="Assets\Scripts\Unit\Monster\Monster.cs" />
     <Compile Include="Assets\Scripts\Manager\MonsterSpawnManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Core.cs" />
+<<<<<<< HEAD
     <Compile Include="Assets\Scripts\SO\SOJoyStickValue.cs" />
     <Compile Include="Assets\Scripts\MinimapCamera.cs" />
     <Compile Include="Assets\Scripts\Unit\BT\AttackTarget.cs" />
@@ -90,6 +108,13 @@
     <Compile Include="Assets\Scripts\Unit\Monster\Unit.cs" />
     <Compile Include="Assets\Scripts\Manager\EventManager.cs" />
     <Compile Include="Assets\Scripts\CompositeShape.cs" />
+=======
+    <Compile Include="Assets\Scripts\Unit\BT\AttackTarget.cs" />
+    <Compile Include="Assets\Script\Character_Weapon.cs" />
+    <Compile Include="Assets\Script\Character_Move.cs" />
+    <Compile Include="Assets\Scripts\Unit\Monster\Unit.cs" />
+    <Compile Include="Assets\Scripts\Manager\EventManager.cs" />
+>>>>>>> origin/main
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -124,6 +149,12 @@
     </Reference>
     <Reference Include="UnityEngine.ClusterRendererModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.ClusterRendererModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterInputModule">
+      <HintPath>C:\Program Files\Unity\Editor\2020.3.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.ClusterInputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterRendererModule">
+      <HintPath>C:\Program Files\Unity\Editor\2020.3.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.ClusterRendererModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
@@ -280,6 +311,9 @@
     </Reference>
     <Reference Include="UnityEngine.VirtualTexturingModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.VirtualTexturingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VirtualTexturingModule">
+      <HintPath>C:\Program Files\Unity\Editor\2020.3.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.VirtualTexturingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.WindModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.WindModule.dll</HintPath>
@@ -698,7 +732,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+<<<<<<< HEAD
       <Project>{E7772BE0-39D2-1C6D-0CCA-124230188E99}</Project>
+=======
+      <Project>{80CD3EA9-7DD6-042C-E5C4-79CC83D0784A}</Project>
+>>>>>>> origin/main
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
   </ItemGroup>
