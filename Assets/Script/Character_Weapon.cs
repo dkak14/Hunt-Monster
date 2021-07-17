@@ -13,11 +13,11 @@ public class Character_Weapon : MonoBehaviour
     {
         Vector3 weaponDir = new Vector3(inputDir.x, inputDir.y, 0f);
         float angle = Quaternion.FromToRotation(Vector3.up, weaponDir).eulerAngles.z; //각도 구하기
-        float size = Mathf.Abs(inputDir.x) >= Mathf.Abs(inputDir.y) ? Mathf.Abs(inputDir.x) : Mathf.Abs(inputDir.y); //길이 구하기
 
-        ArrowImage.rectTransform.rotation = Quaternion.Euler(90f,0f,angle);
-        ArrowImage.rectTransform.localScale = (new Vector3 (1f, size, 1f));
+        ArrowImage.rectTransform.rotation = Quaternion.Euler(90f, 0f, angle);
+        ArrowImage.rectTransform.localScale = (new Vector3(1f, 1f, 1f));
     }
+   
     public void Weapon_Shot(Vector2 inputDir) //발사 (아직 작성 안했습니다!!)
     {
         ArrowImage.rectTransform.localScale = (new Vector3(1f, 0f, 1f));

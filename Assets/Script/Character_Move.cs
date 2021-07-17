@@ -12,7 +12,6 @@ public class Character_Move : MonoBehaviour
     {
         Vector3 moveDir = new Vector3(inputDir.x, 0f, inputDir.y);
 
-        transform.forward = moveDir;
         transform.position += moveDir * Time.deltaTime * speed;
     }
 }
