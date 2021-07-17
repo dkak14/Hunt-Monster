@@ -1,9 +1,5 @@
 sceneSetups:
-<<<<<<< HEAD
-- path: Assets/Scenes/TestRoom0.unity
-=======
-- path: Assets/Scenes/JiyoungTest.unity
->>>>>>> origin/main
+- path: Assets/Scenes/SampleScene.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
