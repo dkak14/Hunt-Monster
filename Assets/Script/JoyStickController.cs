@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class JoyStickController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    [SerializeField] SOJoyStickValue JoyStickValue;
     [SerializeField]
     private RectTransform lever;
     private RectTransform rectTransform;
@@ -25,6 +26,7 @@ public class JoyStickController : MonoBehaviour, IBeginDragHandler, IDragHandler
     {
         ControlJoystickLever(eventData);
         isInput = true;
+        JoyStickValue.Playing = true;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -36,6 +38,7 @@ public class JoyStickController : MonoBehaviour, IBeginDragHandler, IDragHandler
     {
         lever.anchoredPosition = Vector2.zero;
         isInput = false;
+        JoyStickValue.Playing = false;
     }
 
     private void ControlJoystickLever(PointerEventData eventData)
@@ -44,16 +47,6 @@ public class JoyStickController : MonoBehaviour, IBeginDragHandler, IDragHandler
         var inputVector = inputPos.magnitude < leverRange ? inputPos : inputPos.normalized * leverRange;
         lever.anchoredPosition = inputVector;
         inputDir = inputVector / leverRange;
-    }
-
-    private void InputControlVector()
-    {
-        GameObject.Find("Player").GetComponent<Character_Move>().Move(inputDir);
-    }
-
-    void Update()
-    {
-        if (isInput)
-            InputControlVector();
+        JoyStickValue.Value = inputDir;
     }
 }

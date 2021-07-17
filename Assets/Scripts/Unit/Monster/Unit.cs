@@ -1,20 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[RequireComponent(typeof(Rigidbody))]
 public abstract class Unit : MonoBehaviour
 {
     public abstract SOUnit SOUnitData { get; }
-    public int MaxHP => maxHP;
-    public int HP => hp;
-    public float Speed => speed;
-    public float AttackRange => attackRange;
-
-    [SerializeField] protected int maxHP;
-    [SerializeField] protected int hp;
-    [SerializeField] protected float speed;
-    [SerializeField] protected float attackRange;
-
+    protected int hp;
+    public int HP {
+        get { return hp; }
+        set
+        {
+            hp = value;
+            EventManager<PlayerEvent>.Instance.PostEvent(PlayerEvent.ChangeHp, this, null);
+            if (hp <= 0) Die();
+        }
+    }
     protected Rigidbody rigid;
     protected MonsterAI monsterAI;
     public  virtual void Awake() {
@@ -24,7 +24,7 @@ public abstract class Unit : MonoBehaviour
         }
         SetUnit(SOUnitData);
     }
-    public void Update() {
+    public virtual void Update() {
         rigid.velocity = Vector3.zero;
     }
     #region Rotate
@@ -44,7 +44,7 @@ public abstract class Unit : MonoBehaviour
     #endregion
     #region Move
     public virtual void Move(Vector3 dir) {
-        Vector3 movePos = transform.position + dir.normalized * (Speed * Time.deltaTime);
+        Vector3 movePos = transform.position + dir.normalized * (SOUnitData.Speed * Time.deltaTime);
         rigid.MovePosition(movePos); // rigidbody.MovePosition 이 Transfome.position을 이용한 것보다 더 성능이 좋다
     }
     public void Move(float angle) {
@@ -72,9 +72,8 @@ public abstract class Unit : MonoBehaviour
     #endregion
     #region Damaged
     public virtual void Damaged(int damage) {
-        hp -= damage;
-        if (hp <= 0)
-            Die();
+        HP -= damage;
+        Debug.Log(hp);
     }
     #endregion
     #region Attack
@@ -106,9 +105,6 @@ public abstract class Unit : MonoBehaviour
             Debug.LogWarning("유닛 데이터가 존재하지 않습니다.");
             return;
         }
-
-        maxHP = unitData.MaxHP;
         hp = unitData.MaxHP;
-        speed = unitData.Speed;
     }
 }

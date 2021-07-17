@@ -10,9 +10,9 @@ namespace BT {
             monster = unit;
         }
         public override bool Invoke() {
-            if (GameManager.instance.core != null) {
+            if (GameManager.Instance.core != null) {
                 float Dst = Vector2.Distance(monster.GetVec2Position(), GameManager.Instance.core.GetVec2Position());
-                if (Dst < monster.AttackRange)
+                if (Dst < monster.SOUnitData.AttackRange)
                     monster.Attack();
                 else {
                     monster.MoveAndRotate(GameManager.Instance.core.transform);
@@ -24,7 +24,7 @@ namespace BT {
         }
         public override void DrawGizmos() {
             Gizmos.color = Color.white;
-            MyGizmos.DrawWireCicle(monster.transform.position, monster.AttackRange, 30);
+            MyGizmos.DrawWireCicle(monster.transform.position, monster.SOUnitData.AttackRange, 30);
         }
     }
 }

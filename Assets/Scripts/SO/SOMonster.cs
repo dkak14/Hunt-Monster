@@ -8,4 +8,6 @@ public class SOMonster : SOUnit
     public int MinDropGold => minDropGold;
     [SerializeField] int maxDropGold;
     public int MaxDropGold => maxDropGold;
+    [SerializeField] int id;
+    public int ID => id;
 }

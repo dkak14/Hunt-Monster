@@ -63,21 +63,33 @@
     <Compile Include="Assets\Scripts\Unit\BT\BTNode.cs" />
     <Compile Include="Assets\Scripts\SO\SOStageMonster.cs" />
     <Compile Include="Assets\Scripts\Singleton.cs" />
+    <Compile Include="Assets\Scripts\Unit\Player.cs" />
     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
     <Compile Include="Assets\Script\JoyStickController.cs" />
+    <Compile Include="Assets\Scripts\Zone.cs" />
     <Compile Include="Assets\Scripts\Unit\BT\AttackCore.cs" />
+    <Compile Include="Assets\Scripts\UI\Hpbar.cs" />
     <Compile Include="Assets\Scripts\SO\SOMonster.cs" />
     <Compile Include="Assets\Scripts\Unit\Monster\MonsterController.cs" />
+    <Compile Include="Assets\Scripts\PlayerCamera.cs" />
+    <Compile Include="Assets\Scripts\Unit\MinimapIcon.cs" />
     <Compile Include="Assets\Scripts\Unit\BT\MoveMonster.cs" />
+    <Compile Include="Assets\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayerHPbar.cs" />
     <Compile Include="Assets\Scripts\SO\SOUnit.cs" />
     <Compile Include="Assets\Scripts\Unit\Monster\Monster.cs" />
     <Compile Include="Assets\Scripts\Manager\MonsterSpawnManager.cs" />
     <Compile Include="Assets\Scripts\Unit\Core.cs" />
+    <Compile Include="Assets\Scripts\SO\SOJoyStickValue.cs" />
+    <Compile Include="Assets\Scripts\MinimapCamera.cs" />
     <Compile Include="Assets\Scripts\Unit\BT\AttackTarget.cs" />
+    <Compile Include="Assets\Scripts\SO\TestUnit.cs" />
+    <Compile Include="Assets\Scripts\Events\PlayerEvent.cs" />
     <Compile Include="Assets\Script\Character_Move.cs" />
+    <Compile Include="Assets\Scripts\SO\SOPlayer.cs" />
     <Compile Include="Assets\Scripts\Unit\Monster\Unit.cs" />
     <Compile Include="Assets\Scripts\Manager\EventManager.cs" />
-    <Compile Include="Assets\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\CompositeShape.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -6,6 +6,8 @@ public class SOUnit : ScriptableObject
 {
     [SerializeField] Sprite minimapIcon;
     public Sprite MinimapIcon => minimapIcon;
+    [SerializeField] float iconSize;
+    public float IconSize => iconSize;
     [SerializeField] int maxHp;
     public int MaxHP => maxHp;
     [SerializeField] float speed;
