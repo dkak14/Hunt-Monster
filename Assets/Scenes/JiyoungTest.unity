@@ -631,7 +631,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5f082eaebf2414e48b9f92b63ba0d03e, type: 2}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -914,7 +914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2db3ac5711b4fab4ca1adc8e2c5a785c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 1717001771}
+  JoyStickValue: {fileID: 11400000, guid: 9ca5124ab7ab09c4d9e2d6fe2c41ee34, type: 2}
   lever: {fileID: 2143564857}
   leverRange: 50
 --- !u!1 &1685742831
@@ -968,7 +968,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2db3ac5711b4fab4ca1adc8e2c5a785c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 1717001771}
+  JoyStickValue: {fileID: 11400000, guid: b3785568c6b2ddb4e814c6cc7763f18f, type: 2}
   lever: {fileID: 1574720422}
   leverRange: 50
 --- !u!114 &1685742834
@@ -1022,8 +1022,8 @@ GameObject:
   - component: {fileID: 1717001774}
   - component: {fileID: 1717001773}
   - component: {fileID: 1717001772}
-  - component: {fileID: 1717001777}
   - component: {fileID: 1717001778}
+  - component: {fileID: 1717001777}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1079,7 +1079,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 533022355cf85724283a316999e935ba, type: 2}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1134,10 +1134,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1717001771}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a214e7859e1dfc94d980842e96863528, type: 3}
+  m_Script: {fileID: 11500000, guid: 50de84460e62d104aa6b821f9a2c260f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  soPlayerData: {fileID: 11400000, guid: 9c37b7a7e0fffd3469c13cbe97b12a73, type: 2}
+  JoyStickValue: {fileID: 11400000, guid: 9ca5124ab7ab09c4d9e2d6fe2c41ee34, type: 2}
+  AttackStickValue: {fileID: 11400000, guid: b3785568c6b2ddb4e814c6cc7763f18f, type: 2}
 --- !u!114 &1717001778
 MonoBehaviour:
   m_ObjectHideFlags: 0

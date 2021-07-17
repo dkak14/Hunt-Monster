@@ -31,10 +31,10 @@ public abstract class Unit : MonoBehaviour
     public virtual void Rotate(float angle) {
         transform.rotation = Quaternion.Euler(0, angle, 0);
     }
-    public void Rotate(Vector3 target) {
-        Vector2 dir = new Vector2(target.x - transform.position.x, target.z - transform.position.z).normalized;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        Rotate(-angle);
+    public void Rotate(Vector3 dir) {
+        float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
+        Debug.Log(dir);
+        Rotate(angle);
     }
     public void Rotate(Transform target) {
         Vector2 dir = new Vector2(target.transform.position.x - transform.position.x, target.transform.position.z - transform.position.z).normalized;
