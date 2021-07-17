@@ -40,7 +40,7 @@ public class JoyStickController : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     private void ControlJoystickLever(PointerEventData eventData)
     {
-        var inputPos = rectTransform.position.x > 0 ? eventData.position - rectTransform.anchoredPosition : eventData.position;
+        var inputPos = eventData.position - rectTransform.anchoredPosition;
         var inputVector = inputPos.magnitude < leverRange ? inputPos : inputPos.normalized * leverRange;
         lever.anchoredPosition = inputVector;
         inputDir = inputVector / leverRange;
