@@ -29,7 +29,11 @@ namespace BT {
                 Transform trans = hit[0].collider.transform;
                 float dst = Vector2.Distance(unit.GetVec2Position(), new Vector2(trans.position.x, trans.position.z));
 
+<<<<<<< HEAD
+                if (dst >= unit.SOUnitData.AttackRange) {
+=======
                 if (dst >= unit.AttackRange) {
+>>>>>>> origin/main
                     Vector3 dir3 = (trans.position - unit.transform.position).normalized;
                     Vector3 dir2 = new Vector3(dir3.x, 0, dir3.z);
                     unit.Move(dir2);

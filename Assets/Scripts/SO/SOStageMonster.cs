@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SOStageMonster : MonoBehaviour
 {
+<<<<<<< HEAD
+
+=======
     // Start is called before the first frame update
     void Start()
     {
@@ -16,4 +19,5 @@ public class SOStageMonster : MonoBehaviour
     {
         
     }
+>>>>>>> origin/main
 }

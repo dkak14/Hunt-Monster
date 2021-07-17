@@ -1,6 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+<<<<<<< HEAD
+[RequireComponent(typeof(Rigidbody))]
+public abstract class Unit : MonoBehaviour
+{
+    public abstract SOUnit SOUnitData { get; }
+    protected int hp;
+    public int HP {
+        get { return hp; }
+        set
+        {
+            hp = value;
+            EventManager<PlayerEvent>.Instance.PostEvent(PlayerEvent.ChangeHp, this, null);
+            if (hp <= 0) Die();
+        }
+    }
+=======
 
 public abstract class Unit : MonoBehaviour
 {
@@ -15,6 +31,7 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] protected float speed;
     [SerializeField] protected float attackRange;
 
+>>>>>>> origin/main
     protected Rigidbody rigid;
     protected MonsterAI monsterAI;
     public  virtual void Awake() {
@@ -24,7 +41,11 @@ public abstract class Unit : MonoBehaviour
         }
         SetUnit(SOUnitData);
     }
+<<<<<<< HEAD
+    public virtual void Update() {
+=======
     public void Update() {
+>>>>>>> origin/main
         rigid.velocity = Vector3.zero;
     }
     #region Rotate
@@ -44,7 +65,11 @@ public abstract class Unit : MonoBehaviour
     #endregion
     #region Move
     public virtual void Move(Vector3 dir) {
+<<<<<<< HEAD
+        Vector3 movePos = transform.position + dir.normalized * (SOUnitData.Speed * Time.deltaTime);
+=======
         Vector3 movePos = transform.position + dir.normalized * (Speed * Time.deltaTime);
+>>>>>>> origin/main
         rigid.MovePosition(movePos); // rigidbody.MovePosition 이 Transfome.position을 이용한 것보다 더 성능이 좋다
     }
     public void Move(float angle) {
@@ -72,9 +97,14 @@ public abstract class Unit : MonoBehaviour
     #endregion
     #region Damaged
     public virtual void Damaged(int damage) {
+<<<<<<< HEAD
+        HP -= damage;
+        Debug.Log(hp);
+=======
         hp -= damage;
         if (hp <= 0)
             Die();
+>>>>>>> origin/main
     }
     #endregion
     #region Attack
@@ -106,9 +136,13 @@ public abstract class Unit : MonoBehaviour
             Debug.LogWarning("유닛 데이터가 존재하지 않습니다.");
             return;
         }
+<<<<<<< HEAD
+        hp = unitData.MaxHP;
+=======
 
         maxHP = unitData.MaxHP;
         hp = unitData.MaxHP;
         speed = unitData.Speed;
+>>>>>>> origin/main
     }
 }
