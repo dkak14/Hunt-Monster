@@ -16,6 +16,9 @@ public class Player : Unit
         if (JoyStickValue.Playing) {
             Move(new Vector3(JoyStickValue.Value.x, 0 , JoyStickValue.Value.y));
         }
+        if (AttackStickValue.Playing) {
+            Rotate(new Vector3(AttackStickValue.Value.x, 0, AttackStickValue.Value.y));
+        }
     }
     public override void Update() {
         base.Update();
