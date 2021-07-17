@@ -48,3 +48,4 @@ public class DontDestroySingletonBehaviour<T> : MonoBehaviour where T : MonoBeha
     }
     private static T instance = null;
 }
+

@@ -58,7 +58,6 @@
   <ItemGroup>
     <Compile Include="Assets\Script\TargetCamera.cs" />
     <Compile Include="Assets\Scripts\Unit\Monster\AI\TestAI.cs" />
-    <Compile Include="Assets\Script\Weapon_Unit.cs" />
     <Compile Include="Assets\Scripts\Unit\BT\DebugMonster.cs" />
     <Compile Include="Assets\Scripts\Unit\Monster\MonsterAI.cs" />
     <Compile Include="Assets\Scripts\Unit\BT\BTNode.cs" />
@@ -86,7 +85,6 @@
     <Compile Include="Assets\Scripts\Unit\BT\AttackTarget.cs" />
     <Compile Include="Assets\Scripts\SO\TestUnit.cs" />
     <Compile Include="Assets\Scripts\Events\PlayerEvent.cs" />
-    <Compile Include="Assets\Script\Character_Weapon.cs" />
     <Compile Include="Assets\Script\Character_Move.cs" />
     <Compile Include="Assets\Scripts\SO\SOPlayer.cs" />
     <Compile Include="Assets\Scripts\CompositeShape.cs" />

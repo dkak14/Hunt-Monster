@@ -10,10 +10,10 @@ public class JoyStickController : MonoBehaviour, IBeginDragHandler, IDragHandler
     private RectTransform lever;
     private RectTransform rectTransform;
 
-    [SerializeField, Range(0, 100)] private float leverRange;
+    [SerializeField, Range(0,100)]
+    private float leverRange;
 
     private Vector2 inputDir;
-    private bool is_L_Input, is_R_Input;
 
 
     private void Awake()

@@ -17,4 +17,3 @@ public class SOUnit : ScriptableObject
     [SerializeField] float attackRange;
     public float AttackRange => attackRange;
 }
-

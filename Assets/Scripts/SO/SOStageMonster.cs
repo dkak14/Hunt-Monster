@@ -2,5 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SOStageMonster : MonoBehaviour {
+public class SOStageMonster : MonoBehaviour
+{
+
 }
