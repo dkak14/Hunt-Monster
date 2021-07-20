@@ -733,7 +733,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1140,6 +1140,8 @@ MonoBehaviour:
   soPlayerData: {fileID: 11400000, guid: 9c37b7a7e0fffd3469c13cbe97b12a73, type: 2}
   JoyStickValue: {fileID: 11400000, guid: 9ca5124ab7ab09c4d9e2d6fe2c41ee34, type: 2}
   AttackStickValue: {fileID: 11400000, guid: b3785568c6b2ddb4e814c6cc7763f18f, type: 2}
+  bullet: {fileID: 8891466337066396707, guid: 3bc39fa6ac5f5b2499585cfdf95305fb, type: 3}
+  FirePosition: {fileID: 1912654216}
 --- !u!114 &1717001778
 MonoBehaviour:
   m_ObjectHideFlags: 0
