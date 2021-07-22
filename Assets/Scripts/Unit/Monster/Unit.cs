@@ -42,12 +42,6 @@ public abstract class Unit : MonoBehaviour
         Rotate(-angle);
     }
     #endregion
-    #region Shot
-    public virtual void Shot(GameObject bullet, Transform firePos)
-    {
-        Instantiate(bullet, firePos.position, firePos.rotation);
-    }
-    #endregion
     #region Move
     public virtual void Move(Vector3 dir) {
         Vector3 movePos = transform.position + dir.normalized * (SOUnitData.Speed * Time.deltaTime);

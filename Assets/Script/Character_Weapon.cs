@@ -5,24 +5,27 @@ using UnityEngine.UI;
 
 public class Character_Weapon : MonoBehaviour
 {
-    //컨트롤러에서 받은 방향 값으로 조준 방향 설정 및 발사 담당
-    [SerializeField] private Weapon_Unit WeaponData;
-    [SerializeField] private Image ArrowImage;//조준 방향 UI
+    [SerializeField] SOJoyStickValue AttackStickValue;
+    [SerializeField] Weapon_Unit WeaponData;
 
-    public void Weapon_Aiming(Vector2 inputDir) //조준
+    public GameObject bullet; //총알 Prefab
+    public Transform FirePosition; //총알 발사 위치
+
+    public void FixedUpdate()
     {
-        Vector3 weaponDir = new Vector3(inputDir.x, inputDir.y, 0f);
-        float angle = Quaternion.FromToRotation(Vector3.up, weaponDir).eulerAngles.z; //각도 구하기
-
-        ArrowImage.rectTransform.rotation = Quaternion.Euler(90f, 0f, angle);
-        ArrowImage.rectTransform.localScale = (new Vector3(1f, 1f, 1f));
+        if (AttackStickValue.Playing == false && WeaponData.Shot){
+            Weapon_Shot();
+        }
     }
-   
-    public void Weapon_Shot(Vector2 inputDir) //발사 (아직 작성 안했습니다!!)
+    public void Weapon_Shot()
     {
-        ArrowImage.rectTransform.localScale = (new Vector3(1f, 0f, 1f));
-
-        //Vector3 shotDir = new Vector3(inputDir.x, inputDir.y, 0f);
+       var bullet_object = Instantiate(bullet, FirePosition.position, FirePosition.rotation);
+       bullet_object.GetComponent<Rigidbody>().AddForce(transform.forward * WeaponData.Speed);
+       WeaponData.Shot = false;
+    }
+    public void Weapon_Upgrade()
+    {
+        WeaponData.Power += 10;
     }
 }
 
