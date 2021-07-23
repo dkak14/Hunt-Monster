@@ -733,7 +733,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1139,21 +1139,6 @@ MonoBehaviour:
   soPlayerData: {fileID: 11400000, guid: 9c37b7a7e0fffd3469c13cbe97b12a73, type: 2}
   JoyStickValue: {fileID: 11400000, guid: 9ca5124ab7ab09c4d9e2d6fe2c41ee34, type: 2}
   AttackStickValue: {fileID: 11400000, guid: b3785568c6b2ddb4e814c6cc7763f18f, type: 2}
-<<<<<<< HEAD
---- !u!114 &1717001778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1717001771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0888a87ea3fa54f4c8a00951fe27275f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-=======
->>>>>>> origin/Jiyoung_brch
   WeaponData: {fileID: 11400000, guid: f47e166811bbe2a4e9248095af809496, type: 2}
 --- !u!1 &1912654215
 GameObject:
