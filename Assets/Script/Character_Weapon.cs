@@ -11,6 +11,10 @@ public class Character_Weapon : MonoBehaviour
     public GameObject bullet; //ÃÑ¾Ë Prefab
     public Transform FirePosition; //ÃÑ¾Ë ¹ß»ç À§Ä¡
 
+    public void Start()
+    {
+        WeaponData.Power = 10;
+    }
     public void FixedUpdate()
     {
         if (AttackStickValue.Playing == false && WeaponData.Shot){
