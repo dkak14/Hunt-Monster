@@ -8,6 +8,7 @@ public abstract class MonsterAI : MonoBehaviour
     BTSequence root = new BTSequence();
     protected Monster monster;
 
+    bool isProcessing;
     protected virtual void Awake() {
         Init();
     }
@@ -23,9 +24,11 @@ public abstract class MonsterAI : MonoBehaviour
     public void StartProcess() {
         StopAllCoroutines();
         StartCoroutine(BehaviourProcess());
+        isProcessing = true;
     }
     public void StopProcess() {
         StopAllCoroutines();
+        isProcessing = false;
     }
     IEnumerator BehaviourProcess() {
         while (true) {
@@ -34,6 +37,7 @@ public abstract class MonsterAI : MonoBehaviour
         }
     }
     private void OnDrawGizmos() {
+        if(isProcessing)
         DrawGizmos(root);
     }
     private void DrawGizmos(BTCompositeNode compositeNode) {

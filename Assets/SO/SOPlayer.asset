@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 511145f0234cc1549b6bcc1edc6d9e26, type: 3}
   m_Name: SOPlayer
   m_EditorClassIdentifier: 
+  unitName: Player
   minimapIcon: {fileID: 0}
+  iconSize: 0
   maxHp: 10
-  speed: 1
+  speed: 4
   rotateSpeed: 0
   attackRange: 0
   invincibilityTime: 0

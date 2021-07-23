@@ -6,6 +6,7 @@ using System;
 namespace BT {
     [Serializable]
     public abstract class BTNode {
+        public int ID = -1;
         public abstract bool Invoke();
         public virtual void DrawGizmos() { }
     }

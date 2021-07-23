@@ -14,8 +14,9 @@ public class ZoneEditor : Editor
     Vector3 Size = new Vector3(3, 3, 3);
 
     MaterialPropertyBlock MPB;
-    private void OnEnable() {
+    protected virtual void OnEnable() {
         zone = (Zone)target;
+        zone.transform.gameObject.layer = LayerMask.NameToLayer("UI");
         Height = serializedObject.FindProperty("Height").floatValue;
         meshFilter = zone.GetComponent<MeshFilter>();
         meshRenderer = zone.GetComponent<MeshRenderer>();
@@ -31,7 +32,7 @@ public class ZoneEditor : Editor
         }
     }
 
-    private void OnSceneGUI() {
+    protected virtual void OnSceneGUI() {
         Event e = Event.current;
         zone.transform.position = Vector3.zero;
         if (e.type == EventType.MouseDown && e.button == 1 && e.shift) {
@@ -50,7 +51,7 @@ public class ZoneEditor : Editor
                 Vector3 vec = Handles.FreeMoveHandle(zone.Points[i], Quaternion.identity, 0.5f, Vector2.zero, Handles.DotHandleCap);
                 Handles.BeginGUI();
                 if (GUI.Button(new Rect(HandleUtility.WorldToGUIPoint(zone.Points[i]) + Vector2.right * 10, new Vector2(40,30)), i.ToString())) {
-                    zone.Points.RemoveAt(i);
+                    RemovePoint(i);
                 }
                 Handles.EndGUI();
                 zone.MovePoint(i, vec);
@@ -58,6 +59,9 @@ public class ZoneEditor : Editor
             // 메쉬 그리기
             DrawMesh();
         }
+    }
+    protected virtual void RemovePoint(int Index) {
+        zone.Points.RemoveAt(Index);
     }
     void DrawMesh() {
         if (zone.Points.Count > 2) {
