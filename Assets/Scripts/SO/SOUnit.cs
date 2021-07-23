@@ -4,6 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SOUnit", menuName = "SO/Unit", order = 0)]
 public class SOUnit : ScriptableObject
 {
+    [SerializeField] string unitName;
+    public string UnitName => unitName;
     [SerializeField] Sprite minimapIcon;
     public Sprite MinimapIcon => minimapIcon;
     [SerializeField] float iconSize;

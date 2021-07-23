@@ -12,8 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b19ad001bce23234983e173ad9c24cbb, type: 3}
   m_Name: SOMonster
   m_EditorClassIdentifier: 
+  unitName: Monster
+  minimapIcon: {fileID: 0}
+  iconSize: 0
   maxHp: 5
-  speed: 2
+  speed: 8
   rotateSpeed: 0
   attackRange: 3
-  minimapIcon: {fileID: 0}
+  minDropGold: 0
+  maxDropGold: 0
+  id: 0

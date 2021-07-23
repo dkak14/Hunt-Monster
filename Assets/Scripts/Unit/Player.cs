@@ -7,14 +7,17 @@ public class Player : Unit
     [SerializeField] SOPlayer soPlayerData;
     [SerializeField] SOJoyStickValue JoyStickValue;
     [SerializeField] SOJoyStickValue AttackStickValue;
-
-    public GameObject bullet; //총알 Prefab
-    public Transform FirePosition; //총알 발사 위치
-    private bool isShot = false; //발사 체크
-
+    [SerializeField] Weapon_Unit WeaponData;
     public override SOUnit SOUnitData => soPlayerData;
     public void Start() {
         EventManager<PlayerEvent>.Instance.PostEvent(PlayerEvent.Spawn, this, null);
+    }
+    public override void Rotate(float angle) {
+        transform.rotation = Quaternion.Euler(0, angle, 0);
+    }
+    public override void Damaged(int damage) {
+        base.Damaged(damage);
+        EventManager<PlayerEvent>.Instance.PostEvent(PlayerEvent.ChangeHp, this, null);
     }
     public void FixedUpdate() {
         if (JoyStickValue.Playing) {
@@ -22,11 +25,7 @@ public class Player : Unit
         }
         if (AttackStickValue.Playing) {
             Rotate(new Vector3(AttackStickValue.Value.x, 0, AttackStickValue.Value.y));
-            isShot = true;
-        }
-        if (AttackStickValue.Playing == false && isShot) {
-            Shot(bullet, FirePosition);
-            isShot = false;
+            WeaponData.Shot = true;
         }
     }
     public override void Update() {

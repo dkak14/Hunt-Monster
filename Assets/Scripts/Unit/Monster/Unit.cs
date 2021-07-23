@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using System;
 [RequireComponent(typeof(Rigidbody))]
 public abstract class Unit : MonoBehaviour
 {
@@ -11,8 +13,7 @@ public abstract class Unit : MonoBehaviour
         set
         {
             hp = value;
-            EventManager<PlayerEvent>.Instance.PostEvent(PlayerEvent.ChangeHp, this, null);
-            if (hp <= 0) Die();
+            if (hp <= 0) DieUnit();
         }
     }
     protected Rigidbody rigid;
@@ -23,29 +24,27 @@ public abstract class Unit : MonoBehaviour
             monsterAI = GetComponent<MonsterAI>();
         }
         SetUnit(SOUnitData);
+        EventManager<UnitEvent>.Instance.PostEvent(UnitEvent.Spawn, this, null);
     }
     public virtual void Update() {
         rigid.velocity = Vector3.zero;
     }
     #region Rotate
     public virtual void Rotate(float angle) {
-        transform.rotation = Quaternion.Euler(0, angle, 0);
+        float transformAngleY = transform.rotation.eulerAngles.y;
+        float totalRotateDuration = Mathf.Abs(transformAngleY - angle) / 60;
+        float rotateDuration = totalRotateDuration * Time.deltaTime;
+        transform.DOKill();
+        transform.DORotateQuaternion(Quaternion.Euler(0, angle, 0), 1);   
     }
     public void Rotate(Vector3 dir) {
-        float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
-        Debug.Log(dir);
-        Rotate(angle);
+        float angle = Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg;
+        Rotate(-angle);
     }
     public void Rotate(Transform target) {
         Vector2 dir = new Vector2(target.transform.position.x - transform.position.x, target.transform.position.z - transform.position.z).normalized;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         Rotate(-angle);
-    }
-    #endregion
-    #region Shot
-    public virtual void Shot(GameObject bullet, Transform firePos)
-    {
-        Instantiate(bullet, firePos.position, firePos.rotation);
     }
     #endregion
     #region Move
@@ -98,8 +97,12 @@ public abstract class Unit : MonoBehaviour
     }
     #endregion
     #region Die
-    public virtual void Die() {
-
+    public void DieUnit() {
+        EventManager<UnitEvent>.Instance.PostEvent(UnitEvent.Die, this, null);
+        Die();
+    }
+    protected virtual void Die() {
+        Destroy(gameObject);
     }
     #endregion
     public Vector2 GetVec2Position() {
