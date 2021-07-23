@@ -7,6 +7,10 @@ public class Player : Unit
     [SerializeField] SOPlayer soPlayerData;
     [SerializeField] SOJoyStickValue JoyStickValue;
     [SerializeField] SOJoyStickValue AttackStickValue;
+<<<<<<< HEAD
+=======
+    [SerializeField] Weapon_Unit WeaponData;
+>>>>>>> origin/Jiyoung_brch
     public override SOUnit SOUnitData => soPlayerData;
     public void Start() {
         EventManager<PlayerEvent>.Instance.PostEvent(PlayerEvent.Spawn, this, null);
@@ -24,6 +28,10 @@ public class Player : Unit
         }
         if (AttackStickValue.Playing) {
             Rotate(new Vector3(AttackStickValue.Value.x, 0, AttackStickValue.Value.y));
+<<<<<<< HEAD
+=======
+            WeaponData.Shot = true;
+>>>>>>> origin/Jiyoung_brch
         }
     }
     public override void Update() {

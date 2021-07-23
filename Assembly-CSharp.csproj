@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{30933387-1A46-61B6-719E-C9BFC4ED0068}</ProjectGuid>
+    <ProjectGuid>{03E4A19E-2F55-76B7-C9DF-B0DC0FCBB665}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -84,6 +84,7 @@
     <Compile Include="Assets\Scripts\SO\SOJoyStickValue.cs" />
     <Compile Include="Assets\Scripts\MinimapCamera.cs" />
     <Compile Include="Assets\Scripts\Unit\BT\AttackTarget.cs" />
+    <Compile Include="Assets\Script\Bullet.cs" />
     <Compile Include="Assets\Scripts\SO\TestUnit.cs" />
     <Compile Include="Assets\Scripts\Manager\MapManager.cs" />
     <Compile Include="Assets\Scripts\Events\PlayerEvent.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Assets\Scripts\CompositeShape.cs" />
     <Compile Include="Assets\Scripts\Unit\Monster\Unit.cs" />
     <Compile Include="Assets\Scripts\Manager\EventManager.cs" />
+<<<<<<< HEAD
     <Compile Include="Assets\Scripts\Utility\Heap.cs" />
     <Compile Include="Assets\Scripts\MyUtility.cs" />
     <Compile Include="Assets\Scripts\Unit\VendingMachine.cs" />
@@ -130,6 +132,8 @@
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
+=======
+>>>>>>> origin/Jiyoung_brch
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -738,7 +742,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{E7772BE0-39D2-1C6D-0CCA-124230188E99}</Project>
+      <Project>{0E2EF6A9-60C4-7737-74D2-6F6E6D8C6E47}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
   </ItemGroup>
