@@ -7,10 +7,23 @@ public class UnitManager : SingletonBehaviour<UnitManager>
     Dictionary<string, Unit> UnitDataDic = new Dictionary<string, Unit>();
 
     List<string> SpawnedUnitNameList = new List<string>();
+    Dictionary<string, UnitContainer> UnitContainerDic = new Dictionary<string, UnitContainer>();
     Dictionary<string, List<Unit>> SpawnedUnitDic = new Dictionary<string, List<Unit>>(); // 필드에 스폰 된 유닛들
-    private void Awake() {
-        for(int i = 0; i < UnitList.Count; i++) {
-            UnitDataDic.Add(UnitList[i].SOUnitData.UnitName, UnitList[i]);
+    protected override void Awake() {
+        base.Awake();
+        GameObject unitContiner = new GameObject("UnitContainer");
+        for (int i = 0; i < UnitList.Count; i++) {
+            string unitName = UnitList[i].SOUnitData.UnitName;
+            UnitDataDic.Add(unitName, UnitList[i]);
+
+            GameObject container = new GameObject(unitName + "Container");
+            container.transform.parent = unitContiner.transform;
+            UnitContainer ccontainer = new UnitContainer(container.transform);
+            UnitContainerDic.Add(unitName, ccontainer);
+
+            for(int k = 0; k < 100; k++) {
+                UnitContainerDic[unitName].AddUnit(Instantiate(UnitList[i]));
+            }
         }
         EventManager<UnitEvent>.Instance.AddListener(UnitEvent.Spawn, this, SpawnUnitEvent);
         EventManager<UnitEvent>.Instance.AddListener(UnitEvent.Die, this, DieUnitEvent);
@@ -20,7 +33,18 @@ public class UnitManager : SingletonBehaviour<UnitManager>
         if (!SpawnedUnitDic.ContainsKey(UnitName))
             SpawnedUnitDic.Add(UnitName, new List<Unit>());
 
-        Instantiate(UnitDataDic[UnitName], SpawnPos, Quaternion.identity);
+        if(UnitContainerDic[UnitName].LastUnitCount() > 0)
+        UnitContainerDic[UnitName].SpawnUnit(SpawnPos);
+        else {
+            Debug.LogWarning(UnitName + "유닛의 콘테이너가 작아서 확장합니다");
+            for (int k = 0; k < 50; k++) {
+                UnitContainerDic[UnitName].AddUnit(Instantiate(UnitDataDic[UnitName]));
+            }
+            UnitContainerDic[UnitName].SpawnUnit(SpawnPos);
+        }
+    }
+    public List<Unit> GetSpawnableUnitList() {
+        return UnitList;
     }
     public List<Unit> GetSpawnedUnitList(string UnitName) {
         if (SpawnedUnitDic.ContainsKey(UnitName)) {
@@ -39,7 +63,7 @@ public class UnitManager : SingletonBehaviour<UnitManager>
             }
 
             SpawnedUnitDic[unit.SOUnitData.UnitName].Add(unit);
-            Debug.Log("유닛 스폰 감지 " + unit.SOUnitData.UnitName);
+            //Debug.Log("유닛 스폰 감지 " + unit.SOUnitData.UnitName);
         }
     }
     // 유닛 죽음 감지하고 죽으면 SpawnedUnitDic에 뺀다
@@ -56,5 +80,32 @@ public class UnitManager : SingletonBehaviour<UnitManager>
 
     public List<string> GetSpawnedUnitNameList() {
         return SpawnedUnitNameList;
+    }
+}
+
+public class UnitContainer {
+    Queue<Unit> ReadyUnit = new Queue<Unit>();
+    Transform Continer;
+    public UnitContainer(Transform container) {
+        Continer = container;
+    }
+    public void AddUnit(Unit unit) {
+        ReadyUnit.Enqueue(unit);
+        unit.DieEvent += DieUnit;
+        unit.transform.parent = Continer;
+        unit.gameObject.SetActive(false);
+    }
+    void DieUnit(Unit unit) {
+        unit.DieEvent -= DieUnit;
+        AddUnit(unit);
+    }
+    public void SpawnUnit(Vector3 pos) {
+        Unit unit = ReadyUnit.Dequeue();
+        unit.gameObject.SetActive(true);
+        unit.transform.position = pos;
+    }
+
+    public int LastUnitCount() {
+        return ReadyUnit.Count;
     }
 }

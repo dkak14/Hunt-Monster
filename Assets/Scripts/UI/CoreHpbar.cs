@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CoreHpbar : Hpbar
 {
-    void Start() {
+    void Awake() {
         EventManager<GameEvent>.Instance.AddListener(GameEvent.CoreHPChange, this, CorehpChange);
     }
     void CorehpChange(GameEvent eventType, Component sender, object param) {

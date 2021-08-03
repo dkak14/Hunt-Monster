@@ -1,19 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum GameEvent {
-    GameStart, CoreSpawn, CoreHPChange, WallHPChange, HealPlayer
-}
-public enum UnitEvent {
-    Spawn, Die
-}
-public enum UIEvnet {
-    BuyShopItem, BuyWallItem,BuyMEdicitItem, BuyWallHealItem, BuyWeaponUpgradeItem
-}
+using System;
 public class GameManager : SingletonBehaviour<GameManager>
 {
-    int gold = 0;
-    public int Gold { get { return gold; }set { gold = value; gold = Mathf.Max(gold, 0); } }
+    [SerializeField]int coin = 0;
+    public int Coin { get { return coin; }set { coin = value; coin = Mathf.Max(coin, 0); if (CoinValueChange != null) CoinValueChange(coin); } }
+    public Action<int> CoinValueChange;
     public Core core;
     public void Start() {
         EventManager<GameEvent>.Instance.PostEvent(GameEvent.CoreSpawn, core, null);

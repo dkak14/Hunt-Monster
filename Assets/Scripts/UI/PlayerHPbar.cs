@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 public class PlayerHPbar : Hpbar
 {
-    void Start()
+    void Awake()
     {
         EventManager<PlayerEvent>.Instance.AddListener(PlayerEvent.ChangeHp,this, PlayerhpChange);
     }

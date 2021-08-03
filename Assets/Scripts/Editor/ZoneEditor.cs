@@ -6,30 +6,26 @@ using UnityEditor;
 public class ZoneEditor : Editor
 {
     Zone zone;
-    MeshFilter meshFilter;
-    MeshRenderer meshRenderer;
     Material ZoneMaterial;
-    List<Vector2> Points;
-    float Height;
-    Vector3 Size = new Vector3(3, 3, 3);
 
-    MaterialPropertyBlock MPB;
     protected virtual void OnEnable() {
         zone = (Zone)target;
         zone.transform.gameObject.layer = LayerMask.NameToLayer("UI");
-        Height = serializedObject.FindProperty("Height").floatValue;
-        meshFilter = zone.GetComponent<MeshFilter>();
-        meshRenderer = zone.GetComponent<MeshRenderer>();
+
+        zone.meshFilter = zone.GetComponent<MeshFilter>();
+        zone.meshRenderer = zone.GetComponent<MeshRenderer>();
         ZoneMaterial = LoadMaterial();
-        MPB = new MaterialPropertyBlock();
-        if (meshFilter.sharedMesh == null) {
+        if(zone.MPB == null)
+        zone.MPB = new MaterialPropertyBlock();
+        if (zone.meshFilter.sharedMesh == null) {
             Mesh mesh = new Mesh();
             mesh.name = "ZoneMesh";
-            meshFilter.sharedMesh = mesh;
+            zone.meshFilter.sharedMesh = mesh;
         }
-        if(meshRenderer.sharedMaterial == null) {
-            meshRenderer.sharedMaterial = ZoneMaterial;
+        if(zone.meshRenderer.sharedMaterial == null) {
+            zone.meshRenderer.sharedMaterial = ZoneMaterial;
         }
+        serializedObject.ApplyModifiedProperties();
     }
 
     protected virtual void OnSceneGUI() {
@@ -65,7 +61,7 @@ public class ZoneEditor : Editor
     }
     void DrawMesh() {
         if (zone.Points.Count > 2) {
-            Mesh mesh = meshFilter.sharedMesh;
+            Mesh mesh = zone.meshFilter.sharedMesh;
             int triangleCount = zone.Points.Count - 2;
             int[] triangles = new int[triangleCount * 3];
             List<Vector2> vec = new List<Vector2>();
@@ -73,17 +69,15 @@ public class ZoneEditor : Editor
                 vec.Add(new Vector2(zone.Points[i].x, zone.Points[i].z));
             }
             CompositeShape.triangulate(vec.ToArray(), out triangles);
-            mesh.triangles = triangles;
             mesh.vertices = zone.Points.ToArray();
+            mesh.triangles = triangles;
             zone.triangles = triangles;
-            MPB.SetColor("_Color", zone.ZoneColor);
-            meshRenderer.sharedMaterial = ZoneMaterial;
-            meshRenderer.SetPropertyBlock(MPB);
-            meshRenderer.sharedMaterial.color = zone.ZoneColor;
+            zone.meshRenderer.sharedMaterial = ZoneMaterial;
+            zone.SetMBPColor();
         }
     }
     Material LoadMaterial() {
-        string MaterialPath = "Assets/Material/Zone.mat";
+        string MaterialPath = "Assets/Scripts/Material/Zone.mat";
         Material material = (Material)AssetDatabase.LoadAssetAtPath(MaterialPath, typeof(Material));
         return material;
     }

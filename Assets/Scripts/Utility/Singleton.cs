@@ -19,11 +19,15 @@ public class SingletonBehaviour<T> : MonoBehaviour where T : MonoBehaviour {
     public static T Instance {
         get
         {
-            if (SingletonBehaviour<T>.instance == null) {
-                SingletonBehaviour<T>.instance = (UnityEngine.Object.FindObjectOfType(typeof(T)) as T);
-            }
+            //if (SingletonBehaviour<T>.instance == null) {
+            //    SingletonBehaviour<T>.instance = (UnityEngine.Object.FindObjectOfType(typeof(T)) as T);
+            //}
             return SingletonBehaviour<T>.instance;
         }
+    }
+    protected virtual void Awake() {
+        if (instance == null)
+            instance = this.GetComponent<T>();
     }
     private static T instance;
 }

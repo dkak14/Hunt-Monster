@@ -2,29 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 public abstract class ShopItem : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI CoinText;
     [SerializeField] GameObject AbleToPurchase;
     [SerializeField] GameObject UnableToPurchase;
     [SerializeField] int Cost;
+    [SerializeField] int IncreaseCost;
+    [SerializeField] int NumberOfBuy;
     [SerializeField] protected bool isBuyContinue;
     bool isBuyItem = true;
     public Button BuyButton;
 
-    public void Awake() {
+    protected virtual void Awake() {
         BuyButton.onClick.AddListener(OnClickBuyButton);
+        CoinText.text = Cost.ToString();
+        AbleToPurchase.SetActive(true);
+        UnableToPurchase.SetActive(false);
     }
     void OnClickBuyButton() {
         if (isBuyItem && BuyItemCondition()) {
-            if (Cost >= GameManager.Instance.Gold) {
+            if (Cost <= GameManager.Instance.Coin) {
                 BuyItem();
-                GameManager.Instance.Gold -= Cost;
-
+                GameManager.Instance.Coin -= Cost;
+                Cost += IncreaseCost;
                 if (!isBuyContinue) {
-                    isBuyItem = false;
-                    BuyEnd();
+                    NumberOfBuy--;
+                    if (NumberOfBuy <= 0) {
+                        isBuyItem = false;
+                        BuyEnd();
+                    }
                 }
             }
+            CoinText.text = Cost.ToString();
         }
     }
     void BuyEnd() {

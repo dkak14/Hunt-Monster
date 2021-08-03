@@ -6,30 +6,35 @@ using UnityEngine.UI;
 public class Character_Weapon : MonoBehaviour
 {
     [SerializeField] SOJoyStickValue AttackStickValue;
-    [SerializeField] Weapon_Unit WeaponData;
+    [SerializeField] Weapon_Unit weaponData;
+    public Weapon_Unit WeaponData => weaponData;
 
-    public GameObject bullet; //ÃÑ¾Ë Prefab
+    float ShotCul = 1;
+    float shotCul = 0;
+    public Bullet bullet; //ÃÑ¾Ë Prefab
     public Transform FirePosition; //ÃÑ¾Ë ¹ß»ç À§Ä¡
-
-    public void Start()
-    {
-        WeaponData.Power = 10;
+    private void Awake() {
+        WeaponData.Power = 20;
     }
-    public void FixedUpdate()
-    {
-        if (AttackStickValue.Playing == false && WeaponData.Shot){
-            Weapon_Shot();
+    private void Update() {
+        if(shotCul > 0) {
+            shotCul -= Time.deltaTime;
         }
     }
     public void Weapon_Shot()
     {
-       var bullet_object = Instantiate(bullet, FirePosition.position, FirePosition.rotation);
-       bullet_object.GetComponent<Rigidbody>().AddForce(transform.forward * WeaponData.Speed);
-       WeaponData.Shot = false;
+        if (shotCul <= 0) {
+            Debug.Log("ÃÑ¾Ë ¹ß»ç");
+            Bullet bullet_object = Instantiate(bullet, FirePosition.position, Quaternion.identity);
+            bullet_object.BulletSet(WeaponData);
+            bullet_object.GetComponent<Rigidbody>().AddForce(transform.right * WeaponData.Speed);
+            WeaponData.Shot = false;
+            shotCul = ShotCul;
+        }
     }
-    public void Weapon_Upgrade()
+    public void Weapon_Upgrade(int value)
     {
-        WeaponData.Power += 10;
+        WeaponData.Power += value;
     }
 }
 

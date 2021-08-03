@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class Zone : MonoBehaviour
 {
@@ -8,7 +9,13 @@ public class Zone : MonoBehaviour
     [SerializeField] float Height;
     [HideInInspector] public List<Vector3> Points = new List<Vector3>();
     [HideInInspector] public int[] triangles;
-
+    public MaterialPropertyBlock MPB;
+    public MeshFilter meshFilter;
+    public MeshRenderer meshRenderer;
+    private void Awake() {
+        MPB = new MaterialPropertyBlock();
+        SetMBPColor();
+    }
     public virtual void AddPoint(int x, int z) {
         Points.Add(new Vector3(x,0,z));
     }
@@ -37,5 +44,10 @@ public class Zone : MonoBehaviour
             return pos;
         }
         return Vector2.zero;
+    }
+
+    public void SetMBPColor () {
+        MPB.SetColor("_Color", ZoneColor);
+        meshRenderer.SetPropertyBlock(MPB);
     }
 }

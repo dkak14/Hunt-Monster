@@ -7,6 +7,10 @@ public class Wall : Unit
     [SerializeField] SOUnit UnitData;
     public override SOUnit SOUnitData => UnitData;
 
+    public override void Awake() {
+        base.Awake();
+        
+    }
     void Start()
     {
         EventManager<UIEvnet>.Instance.AddListener(UIEvnet.BuyWallHealItem, this, HealWall);

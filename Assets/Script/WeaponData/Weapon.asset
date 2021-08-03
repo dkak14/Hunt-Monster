@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Weapon_name: "\uB9E4\uADF8\uB118"
   Weapon_ID: 1
-  Power: 10
+  Power: 20
   Speed: 1000
   Reroad_speed: 8
   Bullet_cont: 6
+  Shot: 0

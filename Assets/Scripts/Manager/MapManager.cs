@@ -18,7 +18,8 @@ public class MapManager : SingletonBehaviour<MapManager>
     int MapNodeYCount;
     Vector3 size;
     List<Node> cantWalkableNode = new List<Node>();
-    public void Awake() {
+    protected override void Awake() {
+        base.Awake();
         Vector2 MapSize = MapZone.GetSize();
         Vector2 MapVec2Center = MapZone.GetCenterPos();
 
@@ -57,9 +58,9 @@ public class MapManager : SingletonBehaviour<MapManager>
             }
         }
         for (int i = 0; i < cantWalkableNode.Count; i++) {
-            Node[] neighborNodes = GetNeighborTiles(cantWalkableNode[i].X, cantWalkableNode[i].Y);
+            Node[] neighborNodes = GetNeighborTiles(cantWalkableNode[i].X, cantWalkableNode[i].Y, 2);
             for (int k = 0; k < neighborNodes.Length; k++) {
-                neighborNodes[k].Penalty = 10;
+                neighborNodes[k].Penalty += 5;
             }
         }
     }
@@ -74,9 +75,9 @@ public class MapManager : SingletonBehaviour<MapManager>
         //    }
         //}
     }
-    public Node GetNodeFromWorldposition(Transform target) {
-        float percentX = ((target.position.x - MapCorner.x) / NodeSize / MapNodeXCount);
-        float percentY = ((target.position.z - MapCorner.z) / NodeSize / MapNodeYCount);
+    public Node GetNodeFromWorldposition(Vector3 worldPosition) {
+        float percentX = ((worldPosition.x - MapCorner.x) / NodeSize / MapNodeXCount);
+        float percentY = ((worldPosition.z - MapCorner.z) / NodeSize / MapNodeYCount);
         percentX = Mathf.Clamp01(percentX);
         percentY = Mathf.Clamp01(percentY);
 
@@ -94,10 +95,10 @@ public class MapManager : SingletonBehaviour<MapManager>
             return true;
         return false;
     }
-    public Node[] GetNeighborTiles(int tileX, int tileY) {
+    public Node[] GetNeighborTiles(int tileX, int tileY, int range) {
         List<Node> tileList = new List<Node>();
-        for(int x = tileX - 1; x <= tileX+ 1; x++) {
-            for (int y = tileY - 1; y <= tileY + 1; y++) {
+        for(int x = tileX - range; x <= tileX+ range; x++) {
+            for (int y = tileY - range; y <= tileY + range; y++) {
                 if (x == tileX && y == tileY)
                     continue;
 
