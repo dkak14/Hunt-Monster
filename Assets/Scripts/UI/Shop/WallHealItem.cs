@@ -5,7 +5,7 @@ using UnityEngine;
 public class WallHealItem :ShopItem {
 
     protected override void BuyItem() {
-        EventManager<UIEvnet>.Instance.PostEvent(UIEvnet.BuyWallHealItem, this, null);
+        EventManager<ShopEvent>.Instance.PostEvent(ShopEvent.BuyWallHealItem, this, null);
     }
 
     protected override bool BuyItemCondition() {

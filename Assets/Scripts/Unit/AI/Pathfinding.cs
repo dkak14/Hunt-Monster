@@ -5,22 +5,10 @@ using UnityEngine;
 using System.Threading;
 public static class Pathfinding
 {
-    //public static Node[] PathTherad(Transform finder, Transform target) {
-    //    Node[] node = null;
-    //    Thread thread = new Thread(() => { node = findPath(finder, target);Debug.Log("차즘"); });
-    //    thread.Start();
-    //    return node;
-    //}
-    //static void testFunction() {
-
-    //}
-    //public static Node[] FindPath(Transform finder, Transform target) {
-    //    return PathTherad(finder, target);
-    //}
     public static Node[] FindPath(Transform finder,Transform target) {
 
-        Node StartNode = MapManager.Instance.GetNodeFromWorldposition(finder);
-        Node EndNode = MapManager.Instance.GetNodeFromWorldposition(target);
+        Node StartNode = MapManager.Instance.GetNodeFromWorldposition(finder.position);
+        Node EndNode = MapManager.Instance.GetNodeFromWorldposition(target.position);
         if (StartNode.IsWalkable && StartNode != null && EndNode != null && EndNode.IsWalkable) {
             List<Node> Way = new List<Node>();
             Heap<Node> OpenList = new Heap<Node>(MapManager.Instance.MapXSize * MapManager.Instance.MapYSize);
@@ -54,7 +42,7 @@ public static class Pathfinding
                     return ways;
                 }
 
-                Node[] neighborNodes = MapManager.Instance.GetNeighborTiles(node.X, node.Y);
+                Node[] neighborNodes = MapManager.Instance.GetNeighborTiles(node.X, node.Y, 1);
                 // 탐색 노드의 주변 노드 탐색
                 for (int i = 0; i < neighborNodes.Length; i++) {
                     Node neighborNode = neighborNodes[i];
@@ -85,40 +73,5 @@ public static class Pathfinding
             return (int)(14 * y + 10 * (x - y));
         else
             return (int)(14 * x + 10 * (y - x));
-    }
-}
-public class Node : IHeapItem<Node>{
-    bool isWalkable;
-    public bool IsWalkable => isWalkable;
-    public int F { get { return G + H; } }
-    public int G;
-    public int H;
-    int x;
-    public int X => x;
-    int y;
-    public int Y => y;
-
-    int heapIndex;
-    public int HeapIndex { get => heapIndex; set { heapIndex = value; } }
-    public int Penalty;
-
-    public Vector3 WorldPosition;
-    public Vector2 WorldVec2Position { get { return new Vector3(WorldPosition.x, WorldPosition.z); } }
-    public Node parent;
-    public Node(int x, int y,Vector3 worldPosition,int penalty, bool isWalkable) {
-        this.isWalkable = isWalkable;
-        this.x = x;
-        this.y = y;
-        Penalty = penalty;
-        WorldPosition = worldPosition;
-    }
-    // 답에 가까우면 1 아니면 -1
-    public int CompareTo(Node other) {
-        //Debug.Log("비교 " +WorldPosition + "  "+ F + "  " +other.WorldPosition+"  " +other.F);
-        int compare = F.CompareTo(other.F);
-        if (compare == 0) {
-            compare = H.CompareTo(other.H);
-        }
-        return -compare;
     }
 }

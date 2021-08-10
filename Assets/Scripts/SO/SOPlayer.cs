@@ -3,6 +3,6 @@ using UnityEngine;
 public class SOPlayer : SOUnit
 {
     [SerializeField] float invincibilityTime;
-    public float TnvincibilityTime => invincibilityTime;
+    public float InvincibilityTime => invincibilityTime;
 
 }

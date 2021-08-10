@@ -6,7 +6,7 @@ namespace BT {
         float sensingRange;
         float attakRange;
         LayerMask layerMask;
-        int objectMask = (1 << LayerMask.NameToLayer("Wall"));
+        int objectMask = (1 << LayerMask.NameToLayer("Wall")) + (1 << LayerMask.NameToLayer("Object"));
         bool FIndTarget = false;
         /// <summary>
         /// 인식 범위 안에 타겟이 있으면 타겟을 쫓아감
@@ -65,7 +65,6 @@ public static class MyGizmos {
         dir[0] = center + new Vector3(Mathf.Cos(0), 0, Mathf.Sin(0)) * radius;
         for (int i = 1; i < smoothNum; i++) {
             float dirAngle = angle * i;
-            //Debug.Log(dirAngle);
             dirAngle *= Mathf.Deg2Rad;
             Vector3 dirvec = new Vector3(Mathf.Cos(dirAngle), 0, Mathf.Sin(dirAngle)) * radius;
             dir[i] = center + dirvec;

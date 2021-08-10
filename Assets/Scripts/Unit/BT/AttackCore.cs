@@ -6,8 +6,8 @@ using BT;
 namespace BT {
     public class AttackCore : BTNode {
         Monster monster;
-        float UpdateCul = 1;
-        float updateCul = 1;
+        float UpdateCul = 15;
+        float updateCul = 0;
         Node[] Way;
         int CurrentWayIndex;
         int layerMask = (1 << LayerMask.NameToLayer("Object")) + (1 << LayerMask.NameToLayer("Wall"));
@@ -18,14 +18,14 @@ namespace BT {
         public AttackCore(Monster unit) {
             monster = unit;
         }
+        void PathfindCallback(Node[] nodes) {
+            CurrentWayIndex = 4;
+            Way = nodes;
+        }
         public override bool Invoke() {
             FollowingPath = false;
             if (GameManager.Instance.core != null) {
-                if (Way == null) {
-                    Way = Pathfinding.FindPath(monster.transform, GameManager.Instance.core.transform);
-                    CurrentWayIndex = 0;
-                }
-                
+
                 float Dst = Vector2.Distance(monster.GetVec2Position(), GameManager.Instance.core.GetVec2Position());
                 if (Dst < monster.SOUnitData.AttackRange)
                     monster.Attack();
@@ -39,8 +39,7 @@ namespace BT {
                     }
                     else {
                         updateCul = UpdateCul;
-                        Way = Pathfinding.FindPath(monster.transform, GameManager.Instance.core.transform);
-                        CurrentWayIndex = 1;
+                        PathfindingManager.Instance.PathFind(monster.transform.position, GameManager.Instance.core.transform.position, PathfindCallback);
                     }
                     FollowPath();
                 }
@@ -56,6 +55,7 @@ namespace BT {
             if (!Physics.Raycast(monster.transform.position, dirToCore, out ray, dst, layerMask)) {
                 if (directCoreCul <= 0) {
                     monster.MoveAndRotate(GameManager.Instance.core.transform);
+                    updateCul = 0;
                     return true;
                 }
                 else {
@@ -66,6 +66,7 @@ namespace BT {
             else {
                 if (ray.collider.tag == "Wall") {
                     FollowingPath = false;
+                    updateCul = 0;
                     monster.MoveAndRotate(ray.collider.transform);
                     return true;
                 }
@@ -75,14 +76,17 @@ namespace BT {
         }
         public void FollowPath() {
             FollowingPath = true;
-            if (CurrentWayIndex < Way.Length) {
-                float Dst = Vector2.Distance(Way[CurrentWayIndex].WorldVec2Position, monster.GetVec2Position());
-                if (Dst < 0.5f) {
-                    CurrentWayIndex++;
+            if (Way != null) {
+                if (CurrentWayIndex < Way.Length) {
+                    float Dst = Vector2.Distance(Way[CurrentWayIndex].WorldVec2Position, monster.GetVec2Position());
+                    if (Dst < 0.5f) {
+                        CurrentWayIndex++;
+                        return;
+                    }
+                    Vector2 vec2Dir = (Way[CurrentWayIndex].WorldVec2Position - monster.GetVec2Position()).normalized;
+                    Vector3 dir = new Vector3(vec2Dir.x, 0, vec2Dir.y);
+                    monster.MoveAndRotate(dir);
                 }
-                Vector2 vec2Dir = (Way[CurrentWayIndex].WorldVec2Position - monster.GetVec2Position() ).normalized;
-                Vector3 dir = new Vector3(vec2Dir.x,0, vec2Dir.y);
-                monster.MoveAndRotate(dir);
             }
         }
         public override void DrawGizmos() {
@@ -91,7 +95,7 @@ namespace BT {
             if (FollowingPath) {
                 if (Way != null) {
                     Gizmos.color = Color.green;
-                    for (int i = 1; i < Way.Length; i++) {
+                    for (int i = CurrentWayIndex; i < Way.Length; i++) {
                         Gizmos.DrawLine(Way[i - 1].WorldPosition, Way[i].WorldPosition);
                     }
                 }

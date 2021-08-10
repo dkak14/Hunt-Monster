@@ -13,15 +13,24 @@ public abstract class Unit : MonoBehaviour
         set
         {
             hp = value;
+            hp = Mathf.Clamp(hp, 0, SOUnitData.MaxHP);
             if (hp <= 0) DieUnit();
+
+            if (HpValueChangeEvent != null)
+                HpValueChangeEvent(this);
         }
     }
     protected Rigidbody rigid;
     protected MonsterAI monsterAI;
+    protected MeshRenderer meshRenderer;
+
+    public Action<Unit> HpValueChangeEvent;
+    public Action<Unit> DieEvent;
     public  virtual void Awake() {
-        rigid = GetComponent<Rigidbody>();
+        TryGetComponent(out rigid);
+        TryGetComponent(out meshRenderer);
         if (GetComponent<MonsterAI>()) {
-            monsterAI = GetComponent<MonsterAI>();
+            TryGetComponent(out monsterAI);
         }
         SetUnit(SOUnitData);
         EventManager<UnitEvent>.Instance.PostEvent(UnitEvent.Spawn, this, null);
@@ -31,9 +40,6 @@ public abstract class Unit : MonoBehaviour
     }
     #region Rotate
     public virtual void Rotate(float angle) {
-        float transformAngleY = transform.rotation.eulerAngles.y;
-        float totalRotateDuration = Mathf.Abs(transformAngleY - angle) / 60;
-        float rotateDuration = totalRotateDuration * Time.deltaTime;
         transform.DOKill();
         transform.DORotateQuaternion(Quaternion.Euler(0, angle, 0), 1);   
     }
@@ -49,7 +55,7 @@ public abstract class Unit : MonoBehaviour
     #endregion
     #region Move
     public virtual void Move(Vector3 dir) {
-        Vector3 movePos = transform.position + dir.normalized * (SOUnitData.Speed * Time.deltaTime);
+        Vector3 movePos = transform.position + dir.normalized * (SOUnitData.MoveSpeed * Time.deltaTime);
         rigid.MovePosition(movePos); // rigidbody.MovePosition 이 Transfome.position을 이용한 것보다 더 성능이 좋다
     }
     public void Move(float angle) {
@@ -78,7 +84,7 @@ public abstract class Unit : MonoBehaviour
     #region Damaged
     public virtual void Damaged(int damage) {
         HP -= damage;
-        Debug.Log(hp);
+        Debug.Log("HP : " + hp);
     }
     #endregion
     #region Attack
@@ -99,6 +105,8 @@ public abstract class Unit : MonoBehaviour
     #region Die
     public void DieUnit() {
         EventManager<UnitEvent>.Instance.PostEvent(UnitEvent.Die, this, null);
+        if(DieEvent != null)
+        DieEvent(this);
         Die();
     }
     protected virtual void Die() {
@@ -115,5 +123,8 @@ public abstract class Unit : MonoBehaviour
             return;
         }
         hp = unitData.MaxHP;
+    }
+    protected virtual void OnDisable() {
+        transform.DOKill();
     }
 }

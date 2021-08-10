@@ -11,10 +11,10 @@ public class BoxZoneEditor : ZoneEditor
         boxZone = (BoxZone)target;
         if(boxZone.Points.Count == 0) {
             boxZone.Points = new List<Vector3>();
-            boxZone.AddPoint(0, 0);
-            boxZone.AddPoint(0, 1);
-            boxZone.AddPoint(1, 1);
-            boxZone.AddPoint(1, 0);
+            boxZone.AddPoint(-4, -4);
+            boxZone.AddPoint(-4, 4);
+            boxZone.AddPoint(4, 4);
+            boxZone.AddPoint(4, -4);
             Debug.Log(boxZone.Points.Count);
         }
     }

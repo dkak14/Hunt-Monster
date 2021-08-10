@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 public class Hpbar : MonoBehaviour {
-    [SerializeField] Image HpbarImage;
+    [SerializeField] protected Image HpbarImage;
     [SerializeField] Color PlusHpColor;
     [SerializeField] Color MinusHpColor;
     float BarValue = 1;
