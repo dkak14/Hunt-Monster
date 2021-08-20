@@ -28,7 +28,7 @@ namespace BT {
 
                 float Dst = Vector2.Distance(monster.GetVec2Position(), GameManager.Instance.core.GetVec2Position());
                 if (Dst < monster.SOUnitData.AttackRange)
-                    monster.Attack();
+                    monster.Attack(GameManager.Instance.core);
                 else {
                     if (CheckWall()) {
                         return true;

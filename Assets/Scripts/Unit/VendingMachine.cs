@@ -12,7 +12,6 @@ public class VendingMachine : MonoBehaviour
         Collider[] collider = Physics.OverlapSphere(transform.position, SensingRange, layerMask);
         if (collider.Length > 0) {
             UIManager.Instance.SetActiveShopButton(true);
-            Debug.Log("플레이어 감지");
         }
         else {
             UIManager.Instance.SetActiveShopButton(false);

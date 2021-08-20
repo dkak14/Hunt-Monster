@@ -45,11 +45,21 @@ public class SaveData
     public List<SaveData> GetList() {
         return _list;
     }
+    public void AddData(string key, SaveData data) {
+        type = SaveDataType.Dictionary;
+        if (!_Dic.ContainsKey(key)) {
+            _Dic.Add(key, data);
+        }
+        else {
+            Debug.LogWarning(key + "라는 키는 이미 존재합니다.");
+        }
+    }
     public SaveData GetData(string key) {
         if (_Dic.ContainsKey(key)) {
             return _Dic[key];
         }
         else {
+            Debug.LogWarning(key + "라는 키는 업습니다.");
             return null;
         }
     }
@@ -73,7 +83,6 @@ public class SaveData
                 for (var enumerator = _Dic.GetEnumerator(); enumerator.MoveNext();) {
                     KeyValuePair<string, SaveData> key = enumerator.Current;
                     KV kv = new KV(key.Key, key.Value.GetSerializedData());
-                    Debug.Log("key : " + key.Key);
                     di.kv[k] = kv;
                     k++;
                 }

@@ -24,8 +24,9 @@ public class Character_Weapon : MonoBehaviour
     public void Weapon_Shot()
     {
         if (shotCul <= 0) {
-            Debug.Log("ÃÑ¾Ë ¹ß»ç");
+            Debug.Log("ÃÑ¾Ë ¹ß»ç" + WeaponData.Speed);
             Bullet bullet_object = Instantiate(bullet, FirePosition.position, Quaternion.identity);
+            bullet_object.transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);
             bullet_object.BulletSet(WeaponData);
             bullet_object.GetComponent<Rigidbody>().AddForce(transform.right * WeaponData.Speed);
             WeaponData.Shot = false;

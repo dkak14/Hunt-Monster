@@ -11,6 +11,7 @@ public class UnitManager : SingletonBehaviour<UnitManager>
     Dictionary<string, List<Unit>> SpawnedUnitDic = new Dictionary<string, List<Unit>>(); // 필드에 스폰 된 유닛들
     protected override void Awake() {
         base.Awake();
+
         GameObject unitContiner = new GameObject("UnitContainer");
         for (int i = 0; i < UnitList.Count; i++) {
             string unitName = UnitList[i].SOUnitData.UnitName;
@@ -30,8 +31,15 @@ public class UnitManager : SingletonBehaviour<UnitManager>
     }
     // 유닛 스폰가능한 유닛만 스폰 하는 함수
     public void SpawnUnit(string UnitName, Vector3 SpawnPos) {
-        if (!SpawnedUnitDic.ContainsKey(UnitName))
+        if (!UnitContainerDic.ContainsKey(UnitName)) {
+            Debug.LogWarning(UnitName + "해당 유닛은 없습니다.");
+            return;
+        }
+
+        if (!SpawnedUnitDic.ContainsKey(UnitName)) {
             SpawnedUnitDic.Add(UnitName, new List<Unit>());
+            SpawnedUnitNameList.Add(UnitName);
+        }
 
         if(UnitContainerDic[UnitName].LastUnitCount() > 0)
         UnitContainerDic[UnitName].SpawnUnit(SpawnPos);
@@ -40,7 +48,8 @@ public class UnitManager : SingletonBehaviour<UnitManager>
             for (int k = 0; k < 50; k++) {
                 UnitContainerDic[UnitName].AddUnit(Instantiate(UnitDataDic[UnitName]));
             }
-            UnitContainerDic[UnitName].SpawnUnit(SpawnPos);
+            Unit spawnUnit = UnitContainerDic[UnitName].SpawnUnit(SpawnPos);
+            EventManager<UnitEvent>.Instance.PostEvent(UnitEvent.Spawn, spawnUnit, null);
         }
     }
     public List<Unit> GetSpawnableUnitList() {
@@ -55,8 +64,9 @@ public class UnitManager : SingletonBehaviour<UnitManager>
     }
     // 유닛 스폰 감지하고 스폰되면 SpawnedUnitDic에 추가시켜 관리한다
     public void SpawnUnitEvent(UnitEvent eventType, Component Sender, object param) {
-        if (Sender is Unit) {
+        if (Sender is Unit || Sender is Monster) {
             Unit unit = (Unit)Sender;
+            Debug.Log("유닛 소환 감지 " + unit.SOUnitData.UnitName);
             if (!SpawnedUnitDic.ContainsKey(unit.SOUnitData.UnitName)) {
                 SpawnedUnitDic.Add(unit.SOUnitData.UnitName, new List<Unit>());
                 SpawnedUnitNameList.Add(unit.SOUnitData.UnitName);
@@ -99,10 +109,11 @@ public class UnitContainer {
         unit.DieEvent -= DieUnit;
         AddUnit(unit);
     }
-    public void SpawnUnit(Vector3 pos) {
+    public Unit SpawnUnit(Vector3 pos) {
         Unit unit = ReadyUnit.Dequeue();
-        unit.gameObject.SetActive(true);
         unit.transform.position = pos;
+        unit.gameObject.SetActive(true);
+        return unit;
     }
 
     public int LastUnitCount() {

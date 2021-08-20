@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Bone
   minimapIcon: {fileID: 0}
+  dieEffect: {fileID: 1279958246892627673, guid: c19390bba27bca142960915751438f72, type: 3}
   iconSize: 0
   maxHp: 50
   attackDamage: 40
@@ -21,5 +22,6 @@ MonoBehaviour:
   moveSpeed: 2
   attackRange: 2
   attackAngle: 136
+  attackCul: 2
   minDropGold: 10
   maxDropGold: 30

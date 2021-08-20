@@ -14,12 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Zombie
   minimapIcon: {fileID: 0}
+  dieEffect: {fileID: 5785309077156580355, guid: 727f9405b8c12a042a2cf2c716b9041e, type: 3}
   iconSize: 0
   maxHp: 65
   attackDamage: 25
   attackSpeed: 2
-  moveSpeed: 10
+  moveSpeed: 3
   attackRange: 2
   attackAngle: 57
+  attackCul: 2
   minDropGold: 10
   maxDropGold: 30

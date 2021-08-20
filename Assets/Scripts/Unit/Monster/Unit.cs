@@ -14,29 +14,69 @@ public abstract class Unit : MonoBehaviour
         {
             hp = value;
             hp = Mathf.Clamp(hp, 0, SOUnitData.MaxHP);
+            if (HpValueChangeEvent != null) {
+                HpValueChangeEvent(this);
+            }
             if (hp <= 0) DieUnit();
 
-            if (HpValueChangeEvent != null)
-                HpValueChangeEvent(this);
         }
     }
     protected Rigidbody rigid;
     protected MonsterAI monsterAI;
-    protected MeshRenderer meshRenderer;
+    [SerializeField] bool Positioning;
+    [SerializeField] protected MeshRenderer[] meshRenderer;
+    [SerializeField] protected SkinnedMeshRenderer skinMeshRenderer;
+    [SerializeField] protected Animator animator;
+    public Collider unitCollider;
 
     public Action<Unit> HpValueChangeEvent;
     public Action<Unit> DieEvent;
-    public  virtual void Awake() {
+    public Action Stun;
+    public Action StunEnd;
+    bool isDie = false;
+    protected bool isStun;
+    public virtual void Awake() {
+        Init();
+        DieEvent += (Unit unit) => { EventManager<UnitEvent>.Instance.PostEvent(UnitEvent.Die, this, null); };
+    }
+    protected virtual void Init() {
         TryGetComponent(out rigid);
-        TryGetComponent(out meshRenderer);
+
+        if (meshRenderer == null) {
+            meshRenderer = transform.GetComponentsInChildren<MeshRenderer>();
+            skinMeshRenderer  = transform.GetComponentInChildren<SkinnedMeshRenderer>();
+        }
         if (GetComponent<MonsterAI>()) {
             TryGetComponent(out monsterAI);
         }
         SetUnit(SOUnitData);
-        EventManager<UnitEvent>.Instance.PostEvent(UnitEvent.Spawn, this, null);
+        TryGetComponent(out unitCollider);
+
+        if (!Positioning) {
+            transform.position = GetCollisionGroundPos();
+        }
+
+        Stun = null;
+        Stun += () => { isStun = true; };
+
+        StunEnd = null;
+        StunEnd += () => { isStun = false; };
+    }
+    public Vector3 GetCollisionGroundPos() {
+        if (unitCollider != null) {
+            return new Vector3(transform.position.x, unitCollider.bounds.size.y / 2, transform.position.z);
+        }
+        else
+            return new Vector3(transform.position.x, 0, transform.position.z);
     }
     public virtual void Update() {
         rigid.velocity = Vector3.zero;
+    }
+    protected virtual void OnEnable() {
+        if (!Positioning) {
+            transform.position = GetCollisionGroundPos();
+        }
+        EventManager<UnitEvent>.Instance.PostEvent(UnitEvent.Spawn, this, null);
     }
     #region Rotate
     public virtual void Rotate(float angle) {
@@ -84,33 +124,48 @@ public abstract class Unit : MonoBehaviour
     #region Damaged
     public virtual void Damaged(int damage) {
         HP -= damage;
-        Debug.Log("HP : " + hp);
     }
     #endregion
     #region Attack
     // 외부 클래스에서 사용하는 어택 함수 
     // 공격 시 애니메이션 도중에 행동트리를 잠시 중단하고 애니메이션 이벤트에서 다시 실행시킬 부분에서 다시 실행함
-    public void Attack() {
-        if (monsterAI != null) {
+    public void Attack(Unit target) {
+        if (monsterAI != null && !isStun) {
             //if (AttackProcess())
             //    monsterAI.StopProcess();
-            AttackProcess();
+            AttackProcess(target);
         }
     }
     // 자식 클래스에서 어떻게 공격할지 구현하는 어택 함수
-    protected virtual bool AttackProcess() {
+    protected virtual bool AttackProcess(Unit target) {
         return true;
     }
     #endregion
     #region Die
     public void DieUnit() {
-        EventManager<UnitEvent>.Instance.PostEvent(UnitEvent.Die, this, null);
-        if(DieEvent != null)
-        DieEvent(this);
-        Die();
+        if (monsterAI != null)
+            monsterAI.StopProcess();
+
+        float time = DieEffect();
+        if (SOUnitData.DieEffect != null) {
+            ParticleSystem particle = Instantiate(SOUnitData.DieEffect, transform.position, Quaternion.identity);
+            Debug.Log("이펙트 소환" + particle.main.duration + 0.5f);
+            Destroy(particle.gameObject, particle.main.duration + 0.5f);
+        }
+        StartCoroutine(C_Die(time));
     }
-    protected virtual void Die() {
-        Destroy(gameObject);
+    /// <summary>
+    /// 죽음 이펙트 연출 함수. 몇 초 뒤에 사망할 지 float을 반환한다
+    /// </summary>
+    /// <returns></returns>
+    protected virtual float DieEffect() {
+        return 0;
+    }
+    IEnumerator C_Die(float time) {
+        yield return new WaitForSeconds(time);
+        if (DieEvent != null)
+            DieEvent(this);
+        //Destroy(gameObject);
     }
     #endregion
     public Vector2 GetVec2Position() {

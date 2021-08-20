@@ -63,17 +63,12 @@ public class MapManager : SingletonBehaviour<MapManager>
                 neighborNodes[k].Penalty += 5;
             }
         }
+        CreateCollider();
     }
-
-    private void OnDrawGizmos() {
-        //if (MapData != null) {
-        //    for (int y = 0; y < MapNodeYCount; y++) {
-        //        for (int x = 0; x < MapNodeXCount; x++) {
-        //            Gizmos.color = MapData[x, y].IsWalkable == false ? Color.red : Color.white;
-        //            Gizmos.DrawCube(MapData[x, y].WorldPosition + (new Vector3(0, -5, 0)), size);
-        //        }
-        //    }
-        //}
+    void CreateCollider() {
+        BoxCollider collider = transform.gameObject.AddComponent<BoxCollider>();
+        collider.size = new Vector3(MapXSize, 1, MapYSize);
+        collider.center = new Vector3(MapCenter.x, -0.5f, MapCenter.y);
     }
     public Node GetNodeFromWorldposition(Vector3 worldPosition) {
         float percentX = ((worldPosition.x - MapCorner.x) / NodeSize / MapNodeXCount);

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public class Player : Unit
 {
     [SerializeField] SOPlayer soPlayerData;
@@ -21,6 +21,10 @@ public class Player : Unit
     public override void Rotate(float angle) {
         transform.rotation = Quaternion.Euler(0, angle, 0);
     }
+    protected override float DieEffect() {
+        EventManager<PlayerEvent>.Instance.PostEvent(PlayerEvent.Die, this, null);
+        return 1;
+    }
     public override void Damaged(int damage) {
         if (!Invincivility) {
             base.Damaged(damage);
@@ -30,10 +34,15 @@ public class Player : Unit
     }
     IEnumerator C_Invincibility(float time) {
         Invincivility = true;
-        meshRenderer.sharedMaterial.color = new Color(1, 1, 1, 0.5f);
+        MaterialPropertyBlock block = new MaterialPropertyBlock();
+        block.SetColor("_Color", new Color(1, 1, 1, 0.5f));
+        for (int i = 0; i < meshRenderer.Length; i++)
+            meshRenderer[i].SetPropertyBlock(block);
         yield return new WaitForSeconds(time);
         Invincivility = false;
-        meshRenderer.sharedMaterial.color = new Color(1, 1, 1, 1);
+        block.SetColor("_Color", new Color(1, 1, 1, 1));
+        for (int i = 0; i < meshRenderer.Length; i++)
+            meshRenderer[i].SetPropertyBlock(block);
     }
 
     public void FixedUpdate() {
@@ -52,6 +61,8 @@ public class Player : Unit
     public override void Update() {
         base.Update();
         if (Input.GetKeyDown(KeyCode.K))
-            Damaged(50);
+            EventManager<ShopEvent>.Instance.PostEvent(ShopEvent.BuyWallItem, this, null);
+        if (Input.GetKeyDown(KeyCode.P))
+            EventManager<GameEvent>.Instance.PostEvent(GameEvent.GameEnd, this, null);
     }
 }

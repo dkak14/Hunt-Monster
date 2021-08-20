@@ -43,7 +43,7 @@ namespace BT {
                     unit.Rotate(trans);
                 }
                 else
-                    unit.Attack();
+                    unit.Attack(hit[0].transform.GetComponent<Unit>());
                 return true;
             }
             else {

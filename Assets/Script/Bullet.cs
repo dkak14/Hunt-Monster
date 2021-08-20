@@ -6,8 +6,7 @@ public class Bullet : MonoBehaviour
 {
     Weapon_Unit WeaponData;
     int Damage;
-    private void Start()
-    {
+    private void Awake() {
         Destroy(gameObject, 5f);
     }
     public void BulletSet(Weapon_Unit weaponData) {
@@ -15,8 +14,6 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision) {
         if (collision.gameObject.tag == "Enemy") {
-            Debug.Log(collision.gameObject.name);
-            Debug.Log(collision.gameObject.GetComponent<Unit>());
             collision.gameObject.GetComponent<Unit>().Damaged((int)WeaponData.Power);
             Destroy(gameObject);
         }

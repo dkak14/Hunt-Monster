@@ -22,7 +22,7 @@ public class WaveManager : MonoBehaviour
     private void Awake() {
         UnitList = UnitManager.Instance.GetSpawnableUnitList();
         EventManager<MonsterEvent>.Instance.AddListener(MonsterEvent.Spawn, this, SpawnSensing);
-        EventManager<MonsterEvent>.Instance.AddListener(MonsterEvent.Die, this, DieSensing) ;
+        EventManager<MonsterEvent>.Instance.AddListener(MonsterEvent.Die, this, DieSensing);
     }
     private void Start() {
         StartCoroutine(C_WaveStart(CurrentWave));
@@ -45,7 +45,7 @@ public class WaveManager : MonoBehaviour
     //}
     IEnumerator C_WaveStart(int wave) {
         isSpawnEnd = false;
-        EventManager<GameEvent>.Instance.PostEvent(GameEvent.WaveStart, this, null);
+        EventManager<GameEvent>.Instance.PostEvent(GameEvent.WaveStart, this, wave + 1);
         LastWaveMonsterNum = WaveDataList[wave].MonsterNum;
         Debug.Log(wave + 1 + "웨이브 시작");
         while(LastWaveMonsterNum > 0) {

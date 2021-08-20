@@ -5,7 +5,7 @@ public enum MonsterEvent {
     Spawn, Damaged, Die,
 }
 public enum GameEvent {
-    GameStart, CoreSpawn, CoreHPChange, WallHPChange, HealPlayer, WaveStart, WaveEnd
+    GameStart, GameEnd, CoreSpawn, CoreHPChange, WallHPChange, HealPlayer, WaveStart, WaveEnd
 }
 public enum UnitEvent {
     Spawn, Die

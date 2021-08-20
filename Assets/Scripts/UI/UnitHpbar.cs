@@ -7,7 +7,7 @@ public class UnitHpbar : Hpbar
 {
     [SerializeField] Unit unit;
     [SerializeField] Vector2 OffSet = Vector3.zero;
-    private void Awake() {
+    private void Start() {
         HpbarSetting(unit, OffSet);
     }
     private void Update() {

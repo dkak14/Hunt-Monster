@@ -7,8 +7,10 @@ public class MonsterEditor : Editor
 {
     Monster monster;
     SOMonster MonsterData;
+    SerializedProperty meshRenderer;
     private void OnEnable() {
         monster = (Monster)target;
+        meshRenderer = serializedObject.FindProperty("meshRenderer");
     }
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
