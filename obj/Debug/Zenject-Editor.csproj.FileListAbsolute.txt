@@ -1,0 +1,2 @@
+C:\Users\wlstj\Desktop\UnityProjects\Hunt Monster\obj\Debug\Zenject-Editor.csproj.AssemblyReference.cache
+C:\Users\wlstj\Desktop\UnityProjects\Hunt Monster\obj\Debug\Zenject-Editor.csproj.CoreCompileInputs.cache

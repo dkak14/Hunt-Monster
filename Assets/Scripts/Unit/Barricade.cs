@@ -7,7 +7,7 @@ public class Barricade : Unit
     [SerializeField] SOUnit UnitData;
     public override SOUnit SOUnitData => UnitData;
     [SerializeField] LayerMask LandingCollision;
-
+    
     void Start() {
         HpValueChangeEvent += (Unit unit) => { EventManager<GameEvent>.Instance.PostEvent(GameEvent.WallHPChange, this, null); };
         EventManager<ShopEvent>.Instance.AddListener(ShopEvent.BuyWallHealItem, this, HealWall);
@@ -25,10 +25,6 @@ public class Barricade : Unit
 
     void Landing() {
         RaycastHit[] hits = Physics.BoxCastAll(transform.position, unitCollider.bounds.size, Vector3.up, Quaternion.identity, 10, LandingCollision);
-        for (int i = 0; i < hits.Length; i++) {
-            hits[i].collider.transform.gameObject.layer = LayerMask.NameToLayer("None");
-            hits[i].collider.transform.DOKill();
-        }
             Debug.Log("È÷µå " + hits.Length);
         StartCoroutine(movePos(hits));
     }
@@ -48,13 +44,17 @@ public class Barricade : Unit
             hits[i].transform.GetComponent<MonoBehaviour>().StopAllCoroutines();
             float Y = hits[i].transform.position.y;
             int k = i;
-            hits[k].collider.transform.DOMoveY(Y + 5, 0.5f).SetLoops(2, LoopType.Yoyo).OnComplete(() => { hits[i].collider.transform.gameObject.layer = layer; hitUnit.StunEnd(); });
+            hits[k].collider.transform.DOMoveY(Y + 5, 0.5f).SetLoops(2, LoopType.Yoyo).OnComplete(() => { hitUnit.gameObject.layer = layer; hitUnit.StunEnd(); });
             hits[i].collider.transform.DOMoveX(movePos.x, 1);
             hits[i].collider.transform.DOMoveZ(movePos.z, 1);
         }
         yield return null;
     }
-        void HealWall(ShopEvent eventType, Component sender, object param) {
+    protected override float DieEffect() {
+        gameObject.SetActive(false);
+        return 5;
+    }
+    void HealWall(ShopEvent eventType, Component sender, object param) {
         hp = UnitData.MaxHP;
     }
 }

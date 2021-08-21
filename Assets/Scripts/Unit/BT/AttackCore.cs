@@ -68,6 +68,10 @@ namespace BT {
                     FollowingPath = false;
                     updateCul = 0;
                     monster.MoveAndRotate(ray.collider.transform);
+                    float distanceToWall = Vector3.Distance(ray.point, monster.transform.position);
+                    if(distanceToWall < monster.SOUnitData.AttackRange) {
+                        monster.Attack(UnitManager.Instance.GetSpawnedUnitList("Wall")[0]);
+                    }
                     return true;
                 }
             }
