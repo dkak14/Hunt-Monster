@@ -10,6 +10,7 @@ public class ZoneEditor : Editor
 
     protected virtual void OnEnable() {
         zone = (Zone)target;
+        Debug.Log("asdsad");
         zone.transform.gameObject.layer = LayerMask.NameToLayer("UI");
 
         zone.meshFilter = zone.GetComponent<MeshFilter>();
@@ -34,15 +35,15 @@ public class ZoneEditor : Editor
         if (e.type == EventType.MouseDown && e.button == 1 && e.shift) {
             Vector3 pos = Camera.current.ScreenToWorldPoint(e.mousePosition);
             zone.AddPoint((int)pos.x, (int)pos.y);
-            Debug.Log("Ãß°¡");
+            Debug.Log("ï¿½ß°ï¿½");
         }
         if (zone.Points.Count > 0) {
-            // ¼± ÀÕ±â
+            // ï¿½ï¿½ ï¿½Õ±ï¿½
             for (int i = 1; i < zone.Points.Count; i++) {
                 Handles.DrawLine(zone.Points[i - 1], zone.Points[i]);
             }
             Handles.DrawLine(zone.Points[0], zone.Points[zone.Points.Count - 1]);
-            // ÇÚµé ´Þ±â
+            // ï¿½Úµï¿½ ï¿½Þ±ï¿½
             for (int i = 0; i < zone.Points.Count; i++) {
                 Vector3 vec = Handles.FreeMoveHandle(zone.Points[i], Quaternion.identity, 0.5f, Vector2.zero, Handles.DotHandleCap);
                 Handles.BeginGUI();
@@ -52,7 +53,7 @@ public class ZoneEditor : Editor
                 Handles.EndGUI();
                 zone.MovePoint(i, vec);
             }
-            // ¸Þ½¬ ±×¸®±â
+            // ï¿½Þ½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½
             DrawMesh();
         }
     }

@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using DG.Tweening;
 [CustomEditor(typeof(BoxZone),true), CanEditMultipleObjects]
 public class BoxZoneEditor : ZoneEditor
 {
     BoxZone boxZone;
+
     protected override void OnEnable() {
         base.OnEnable();
         boxZone = (BoxZone)target;

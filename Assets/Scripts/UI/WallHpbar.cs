@@ -9,6 +9,6 @@ public class WallHpbar : Hpbar {
     }
     void BuyWall(ShopEvent eventType, Component sender, object param) {
         HpbarImage.gameObject.SetActive(true);
-        //UnitManager.Instance.GetSpawnedUnitList("Core")[0].HpValueChangeEvent += ChangeValue;
+        UnitManager.Instance.GetSpawnedUnitList("Wall")[0].HpValueChangeEvent += ChangeValue;
     }
 }
