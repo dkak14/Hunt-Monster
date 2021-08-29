@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 public class UnitManager : SingletonBehaviour<UnitManager>
 {
     [SerializeField] List<Unit> UnitList = new List<Unit>(); // 스폰가능한 유닛 리스트
@@ -9,6 +10,8 @@ public class UnitManager : SingletonBehaviour<UnitManager>
     List<string> SpawnedUnitNameList = new List<string>();
     Dictionary<string, UnitContainer> UnitContainerDic = new Dictionary<string, UnitContainer>();
     Dictionary<string, List<Unit>> SpawnedUnitDic = new Dictionary<string, List<Unit>>(); // 필드에 스폰 된 유닛들
+
+    [Inject] DiContainer Container;
     protected override void Awake() {
         base.Awake();
 
@@ -23,7 +26,7 @@ public class UnitManager : SingletonBehaviour<UnitManager>
             UnitContainerDic.Add(unitName, ccontainer);
 
             for(int k = 0; k < 100; k++) {
-                UnitContainerDic[unitName].AddUnit(Instantiate(UnitList[i]));
+                UnitContainerDic[unitName].AddUnit(Container.InstantiatePrefabForComponent<Unit>(UnitList[i]));
             }
         }
         EventManager<UnitEvent>.Instance.AddListener(UnitEvent.Spawn, this, SpawnUnitEvent);
@@ -46,7 +49,7 @@ public class UnitManager : SingletonBehaviour<UnitManager>
         else {
             Debug.LogWarning(UnitName + "유닛의 콘테이너가 작아서 확장합니다");
             for (int k = 0; k < 50; k++) {
-                UnitContainerDic[UnitName].AddUnit(Instantiate(UnitDataDic[UnitName]));
+                UnitContainerDic[UnitName].AddUnit(Container.InstantiatePrefabForComponent<Unit>(UnitDataDic[UnitName]));
             }
             Unit spawnUnit = UnitContainerDic[UnitName].SpawnUnit(SpawnPos);
             EventManager<UnitEvent>.Instance.PostEvent(UnitEvent.Spawn, spawnUnit, null);

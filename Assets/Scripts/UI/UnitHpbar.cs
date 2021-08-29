@@ -7,11 +7,21 @@ public class UnitHpbar : Hpbar
 {
     [SerializeField] Unit unit;
     [SerializeField] Vector2 OffSet = Vector3.zero;
+    Vector2 BackGroundPos;
     private void Start() {
         HpbarSetting(unit, OffSet);
+        if(BackGround != null) {
+            StartCoroutine(MoveImage(BackGround));
+        }
+        else {
+            StartCoroutine(MoveImage(HpbarImage));
+        }
     }
-    private void Update() {
-        HpbarImage.rectTransform.position = Camera.main.WorldToScreenPoint(unit.transform.position) + (Vector3)OffSet;
+    IEnumerator MoveImage(Image image) {
+        while (true) {
+            image.rectTransform.position = Camera.main.WorldToScreenPoint(unit.transform.position) + (Vector3)OffSet;
+            yield return null;
+        }
     }
     public void HpbarSetting(Unit unit, Vector2 offSet) {
         this.unit = unit;

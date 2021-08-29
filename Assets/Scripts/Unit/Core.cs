@@ -7,5 +7,7 @@ public class Core : Unit {
     public override SOUnit SOUnitData => soUnit;
     public void Start() {
         rigid.constraints = RigidbodyConstraints.FreezeAll;
+        DieEvent += (unit) => { EventManager<GameEvent>.Instance.PostEvent(GameEvent.GameEnd, this, null); };
     }
+
 }

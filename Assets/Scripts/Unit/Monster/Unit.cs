@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System;
+using Zenject;
 [RequireComponent(typeof(Rigidbody))]
 public abstract class Unit : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public abstract class Unit : MonoBehaviour
     }
     protected Rigidbody rigid;
     protected MonsterAI monsterAI;
-    [SerializeField] bool Positioning;
+    [SerializeField] public bool Positioning;
     [SerializeField] protected MeshRenderer[] meshRenderer;
     [SerializeField] protected SkinnedMeshRenderer skinMeshRenderer;
     [SerializeField] protected Animator animator;
@@ -33,10 +34,15 @@ public abstract class Unit : MonoBehaviour
     public Action<Unit> DieEvent;
     public Action Stun;
     public Action StunEnd;
-    bool isDie = false;
     protected bool isStun;
+    [Inject] MinimapIcon minimapIconObject;
     public virtual void Awake() {
         Init();
+        if (SOUnitData.MinimapIcon != null) {
+            MinimapIcon minimapIcon = Instantiate(minimapIconObject, transform);
+            minimapIcon.transform.position = minimapIcon.transform.position + Vector3.up * 50;
+            minimapIcon.SettingIcon(SOUnitData.MinimapIcon, SOUnitData.IconSize);
+        }
         DieEvent += (Unit unit) => { EventManager<UnitEvent>.Instance.PostEvent(UnitEvent.Die, this, null); };
     }
     protected virtual void Init() {

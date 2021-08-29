@@ -15,6 +15,7 @@ namespace BT {
         float directCoreCul = 0;
 
         bool FollowingPath = true;
+        bool needFindNewPath = false;
         public AttackCore(Monster unit) {
             monster = unit;
         }
@@ -22,7 +23,7 @@ namespace BT {
             CurrentWayIndex = 4;
             Way = nodes;
         }
-        public override bool Invoke() {
+        public override bool Invoke() {          
             FollowingPath = false;
             if (GameManager.Instance.core != null) {
 
@@ -31,8 +32,14 @@ namespace BT {
                     monster.Attack(GameManager.Instance.core);
                 else {
                     if (CheckWall()) {
+                        needFindNewPath = true;
                         return true;
                         
+                    }
+                    if (needFindNewPath) {
+                        updateCul = UpdateCul;
+                        PathfindingManager.Instance.PathFind(monster.transform.position, GameManager.Instance.core.transform.position, PathfindCallback);
+                        needFindNewPath = false;
                     }
                     if (updateCul >= 0) {
                         updateCul -= Time.deltaTime;
@@ -40,8 +47,10 @@ namespace BT {
                     else {
                         updateCul = UpdateCul;
                         PathfindingManager.Instance.PathFind(monster.transform.position, GameManager.Instance.core.transform.position, PathfindCallback);
+                        needFindNewPath = false;
                     }
                     FollowPath();
+                    needFindNewPath = false;
                 }
                 return true;
             }

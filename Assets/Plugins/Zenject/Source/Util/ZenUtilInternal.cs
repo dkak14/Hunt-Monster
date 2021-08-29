@@ -118,7 +118,7 @@ namespace Zenject.Internal
                 {
                     if (animator.gameObject.GetComponent<ZenjectStateMachineBehaviourAutoInjecter>() == null)
                     {
-                        animator.gameObject.AddComponent<ZenjectStateMachineBehaviourAutoInjecter>();
+                        //animator.gameObject.AddComponent<ZenjectStateMachineBehaviourAutoInjecter>();
                     }
                 }
             }

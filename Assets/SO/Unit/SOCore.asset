@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: SOCore
   m_EditorClassIdentifier: 
   unitName: Core
-  minimapIcon: {fileID: 0}
-  iconSize: 0
+  minimapIcon: {fileID: 21300000, guid: 9d30e389a2aa8d546963a12370bd4888, type: 3}
+  dieEffect: {fileID: 0}
+  iconSize: 2
   maxHp: 1000
   attackDamage: 0
   attackSpeed: 0

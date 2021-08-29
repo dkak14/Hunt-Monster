@@ -9,10 +9,16 @@ public class WaveManagerEditor : Editor
 {
     WaveManager waveManager;
 
+    SerializedProperty soWaveDataProperty;
+    SerializedProperty waitTimerProperty;
     ReorderableList zoneList;
     ReorderableList waveList;
     private void OnEnable() {
         waveManager = (WaveManager)target;
+        waitTimerProperty = serializedObject.FindProperty("WaitTimer");
+        soWaveDataProperty = serializedObject.FindProperty("soWaveData");
+
+        waveManager.WaveDatas = waveManager.soWaveData.WaveDatas;
         ZoneListSetting();
         WaveListSetting();
     }
@@ -29,8 +35,7 @@ public class WaveManagerEditor : Editor
         };
     }
     void WaveListSetting() {
-        SerializedProperty waveListProperty = serializedObject.FindProperty("WaveDataList");
-
+        SerializedProperty waveListProperty = serializedObject.FindProperty("WaveDatas");
         waveList = new ReorderableList(serializedObject, waveListProperty, true, true, true, true);
 
         waveList.drawHeaderCallback = (rect) => {
@@ -44,16 +49,22 @@ public class WaveManagerEditor : Editor
             rect.y += 28;
             rect.height = 18;
             GUIContent label = new GUIContent("몬스터 숫자");
-            EditorGUI.PropertyField(rect, waveListProperty.GetArrayElementAtIndex(index).FindPropertyRelative("MonsterNum"), label);
+            EditorGUI.PropertyField(rect, waveListProperty.GetArrayElementAtIndex(index).FindPropertyRelative("monsterNum"), label);
         };
+        waveList.draggable = false;
     }
     public override void OnInspectorGUI() {
         if (zoneList != null) {
             zoneList.DoLayoutList();
+        }
+        EditorGUIUtility.labelWidth += 20;
+        EditorGUILayout.PropertyField(soWaveDataProperty);
+        serializedObject.ApplyModifiedProperties();
+        if (waveList != null && waveManager.soWaveData != null) {
+            EditorGUILayout.PropertyField(waitTimerProperty);
+            serializedObject.ApplyModifiedProperties();
             waveList.DoLayoutList();
         }
-
         EditorGUILayout.LabelField("소환 대기 중인 몬스터 : " + serializedObject.FindProperty("LastWaveMonsterNum").intValue);
-        serializedObject.ApplyModifiedProperties();
     }
 }

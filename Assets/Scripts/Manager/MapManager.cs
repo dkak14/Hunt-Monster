@@ -12,7 +12,6 @@ public class MapManager : SingletonBehaviour<MapManager>
     [Range(0.2f, 1)]
     public float NodeSize;
     public Node[,] MapData;
-    Node[] way;
 
     int MapNodeXCount;
     int MapNodeYCount;
@@ -42,14 +41,16 @@ public class MapManager : SingletonBehaviour<MapManager>
         MapData = new Node[MapNodeXCount, MapNodeYCount];
 
         int layermask = 1 << LayerMask.NameToLayer("Object");
+
+        float posinCell = 0.5f * NodeSize;
         for (int y = 0; y < MapNodeYCount; y++) {
             for (int x = 0; x < MapNodeXCount; x++) {
                 float NodeX = x * NodeSize + MapCorner.x;
                 float NodeY = y * NodeSize + MapCorner.z;
-                Vector3 worldPosition = new Vector3(NodeX, 0, NodeY);
+                Vector3 worldPosition = new Vector3(NodeX + posinCell, 0, NodeY + posinCell);
                 RaycastHit ray;
-                if (Physics.Raycast(new Vector3(NodeX, 10, NodeY), Vector3.down, out ray, 50, layermask)) {
-                    MapData[x, y] = new Node(x, y, worldPosition, 0, false);
+                if (Physics.Raycast(new Vector3(NodeX + posinCell, 10, NodeY + posinCell), Vector3.down, out ray, 50, layermask)) {
+                    MapData[x, y] = new Node(x , y, worldPosition, 0, false);
                     cantWalkableNode.Add(MapData[x, y]);
                 }
                 else {
@@ -105,4 +106,18 @@ public class MapManager : SingletonBehaviour<MapManager>
         return tileList.ToArray();
     }
 
+    private void OnDrawGizmos() {
+        if (MapData != null) {
+            Vector3 vec = new Vector3(NodeSize, NodeSize, NodeSize);
+            for (int y = 0; y < MapNodeYCount; y++) {
+                for (int x = 0; x < MapNodeXCount; x++) {
+                    if (MapData[x, y].IsWalkable)
+                        Gizmos.color = Color.white;
+                    else
+                        Gizmos.color = Color.red;
+                    Gizmos.DrawCube(MapData[x, y].WorldPosition, vec);
+                }
+            }
+        }
+    }
 }

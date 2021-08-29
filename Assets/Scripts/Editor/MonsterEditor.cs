@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 [CustomEditor(typeof(Monster),true),CanEditMultipleObjects]
-public class MonsterEditor : Editor
+public class MonsterEditor : UnitEditor
 {
     Monster monster;
     SOMonster MonsterData;
     SerializedProperty meshRenderer;
-    private void OnEnable() {
+    public override void OnEnable() {
+        base.OnEnable();
         monster = (Monster)target;
         meshRenderer = serializedObject.FindProperty("meshRenderer");
     }

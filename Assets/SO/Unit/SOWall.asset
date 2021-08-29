@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Wall
   minimapIcon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  dieEffect: {fileID: 0}
   iconSize: 5
-  maxHp: 100
-  speed: 0
-  rotateSpeed: 0
+  maxHp: 300
+  attackDamage: 0
+  attackSpeed: 0
+  moveSpeed: 0
   attackRange: 0

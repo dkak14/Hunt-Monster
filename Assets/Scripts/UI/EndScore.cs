@@ -21,8 +21,8 @@ public class EndScore : MonoBehaviour
     void KillUpdate(MonsterEvent eventType, Component sender, object param) {
         KillScore++;
     }
-    void WaveUpdate(GameEvent eventType, Component sender, object param) {
-        WaveScore = (int)param;
+    void WaveUpdate(GameEvent eventType, Component sender, object[] param) {
+        WaveScore = (int)param[0];
     }
     void ScoreUpdate(GameEvent eventType, Component sender, object param) {
         SaveData loadData = SaveSystem.Load(1, "Score");
@@ -36,7 +36,7 @@ public class EndScore : MonoBehaviour
             maxWaveScore = maxWave.GetInt();
         }
         KillMonster.text = KillScore.ToString();
-        Wave.text = WaveScore.ToString();
+        Wave.text = (WaveScore + 1).ToString();
 
         if (maxKillScore < KillScore)
             maxKillScore = KillScore;
@@ -44,8 +44,8 @@ public class EndScore : MonoBehaviour
         if (maxWaveScore < WaveScore)
             maxWaveScore = WaveScore;
 
-        MaxKillMonster.text = KillScore.ToString();
-        MaxWave.text = maxWaveScore.ToString();
+        MaxKillMonster.text = maxKillScore.ToString();
+        MaxWave.text = (maxWaveScore + 1).ToString();
 
         SaveData saveData = new SaveData();
         SaveData killData = new SaveData(maxKillScore);

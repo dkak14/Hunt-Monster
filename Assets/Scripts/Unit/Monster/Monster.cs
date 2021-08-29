@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using System.Collections;
 using DG.Tweening;
+using Zenject;
 public class Monster : Unit
 {
     [SerializeField] SOMonster soMonsterData;
@@ -11,20 +12,26 @@ public class Monster : Unit
     public MonsterAI AI;
 
     Unit Target;
+
+    [Inject] IPlaySound PlaySound;
     public override void Awake() {
         base.Awake();
         AI = GetComponent<MonsterAI>();
         EventManager<MonsterEvent>.Instance.PostEvent(MonsterEvent.Spawn, this, null);
         DieEvent += (Unit unit) => { EventManager<MonsterEvent>.Instance.PostEvent(MonsterEvent.Die, this, null); };
         Stun += () => { AI.StopProcess(); };
-        StunEnd += () => { AI.StartProcess();};
+        StunEnd += () => { AI.StartProcess(); };
     }
-    public override void Update() {
-        base.Update();
-    }
+
     protected override void OnEnable() {
         base.OnEnable();
         EventManager<MonsterEvent>.Instance.PostEvent(MonsterEvent.Spawn, this, null);
+    }
+
+    public override void Damaged(int damage) {
+        if (isInCamera())
+        PlaySound.PlaySound(SoundType.SFX, "MonsterDamaged");
+        base.Damaged(damage);
     }
     protected override float DieEffect() {
         GameManager.Instance.Coin += Random.Range(soMonsterData.MinDropGold, soMonsterData.MaxDropGold);
@@ -49,21 +56,28 @@ public class Monster : Unit
             yield return null;
         }
     }
+    bool isInCamera() {
+        Camera camera = Camera.main;
+        Vector3 screenPoint = camera.WorldToScreenPoint(transform.position);
+        Resolution resolution = Screen.currentResolution;
+        if (-100 < screenPoint.x && screenPoint.x < resolution.width + 100 && -100 < screenPoint.y && screenPoint.y < resolution.height + 100)
+            return true;
+        return false;
+    }
     protected override bool AttackProcess(Unit target) {
         if (!isStun) {
             Target = target;
+            if (isInCamera())
+                PlaySound.PlayOneShot(SoundType.SFX, soMonsterData.UnitName + "Attack");
             if (animator != null)
-                animator.SetBool("attack", true);
+                animator.SetTrigger("attack");
             AI.StopProcess();
             StartCoroutine(StartProcess());
-
         }
         return true;
     }
     IEnumerator StartProcess() {
-        yield return new WaitForSeconds(1.5f);
-        if (animator != null)
-            animator.SetBool("attack", false);
+        yield return new WaitForSeconds(2f);
         yield return null;
         if(!isStun)
         AI.StartProcess();
