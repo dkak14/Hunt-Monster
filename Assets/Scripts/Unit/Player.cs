@@ -10,17 +10,27 @@ public class Player : Unit
     [SerializeField] SOJoyStickValue JoyStickValue;
     [SerializeField] SOJoyStickValue AttackStickValue;
     [SerializeField] Material InvincivilityMaterial;
+    [SerializeField] ParticleSystem AttackParticle;
     Character_Weapon playerWeapon;
     public override SOUnit SOUnitData => soPlayerData;
     [SerializeField] PlayerLeg[] Legs;
     bool Invincivility = false;
     bool GameEnd;
-
+    bool isRotate = true;
     [Inject] IPlaySound PlaySound;
+
     public override void Awake() {
         base.Awake();
         playerWeapon = GetComponent<Character_Weapon>();
-        playerWeapon.ShotBulet += () => { animator.SetTrigger("attack"); };
+        playerWeapon.ShotBulet += () => {
+            transform.DOKill();
+            float angle = Mathf.Atan2(AttackStickValue.Value.y, AttackStickValue.Value.x) * Mathf.Rad2Deg;
+            angle *= -1;
+            transform.rotation = Quaternion.Euler(0, angle, 0);
+            isRotate = false; 
+            StartCoroutine(C_RatateLimit());
+            animator.SetTrigger("attack"); AttackParticle.Play();
+        };
 
         for(int i = 0;i< Legs.Length; i++) {
             Legs[i].vec = Legs[i].Leg.rotation.eulerAngles;
@@ -28,14 +38,26 @@ public class Player : Unit
         EventManager<ShopEvent>.Instance.AddListener(ShopEvent.BuyMedicitItem, this, (eventType, sender, param) => { if(hp > 0)HP = soPlayerData.MaxHP; });
         EventManager<GameEvent>.Instance.AddListener(GameEvent.GameEnd, this, (eventType, sender, param) => { GameEnd = true; });
         HpValueChangeEvent += (unit) => { EventManager<PlayerEvent>.Instance.PostEvent(PlayerEvent.ChangeHp, this, null); };
+
     }
     public void Start() {
         EventManager<PlayerEvent>.Instance.PostEvent(PlayerEvent.Spawn, this, null);
     }
+    IEnumerator C_RatateLimit() {
+        isRotate = false;
+        yield return new WaitForSeconds(0.25f);
+        isRotate = true;
+    }
     public override void Rotate(float angle) {
-        transform.rotation = Quaternion.Euler(0, angle, 0);
+        if (isRotate) {
+            transform.DOKill();
+            Vector3 anglevec = new Vector3(0, angle, 0);
+            transform.DORotate(anglevec, 0.2f);
+        }
+        //transform.rotation = Quaternion.Euler(0, angle, 0);
     }
     protected override float DieEffect() {
+        animator.SetBool("Die", true);
         EventManager<GameEvent>.Instance.PostEvent(GameEvent.GameEnd, this, null);
         //EventManager<PlayerEvent>.Instance.PostEvent(PlayerEvent.Die, this, null);
         return 1;
@@ -46,6 +68,10 @@ public class Player : Unit
             StartCoroutine(C_Invincibility(soPlayerData.InvincibilityTime));
         }
     }
+    public void animSpeedChange(float speed) {
+        animator.speed = speed;
+    }
+
     IEnumerator C_Invincibility(float time) {
         Invincivility = true;
         MaterialPropertyBlock block = new MaterialPropertyBlock();
@@ -71,13 +97,13 @@ public class Player : Unit
                 if (!AttackStickValue.Playing) {
                     Rotate(new Vector3(JoyStickValue.Value.x, 0, JoyStickValue.Value.y));
                 }
-                animator.SetBool("move", true);
+                animator.SetBool("Move", true);
             }
             else {
-                animator.SetBool("move", false);
+                animator.SetBool("Move", false);
             }
             if (AttackStickValue.Playing) {
-                Rotate(new Vector3(AttackStickValue.Value.x, 0, AttackStickValue.Value.y));
+                Rotate(new Vector3(AttackStickValue.Value.x, 0 , AttackStickValue.Value.y));
                 playerWeapon.Weapon_Shot();
             }
         }
@@ -105,7 +131,7 @@ public class Player : Unit
                 //    angleDifference = 180 -( angleDifference - 180);
                 //}
 
-                //if (angleDifference < 50) {
+                //if (angleDifference < 70) {
                 //    for (int i = 0; i < Legs.Length; i++) {
                 //        float angle = 0;
                 //        if (moveAngle <= 90) {

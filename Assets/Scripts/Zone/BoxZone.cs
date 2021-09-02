@@ -42,9 +42,14 @@ public class BoxZone : Zone
         int y = (int)Mathf.Abs(Points[0].z - Points[2].z);
         return new Vector2(x, y);
     }
-    public Vector2 GetCenterPos() {
+    public Vector2 GetCenterVec2Pos() {
         float centerX = (Points[2].x - Points[0].x) / 2;
         float centerY = (Points[2].z - Points[0].z) / 2;
         return new Vector2(Points[0].x + centerX, Points[0].z + centerY);
+    }
+    public Vector2 GetCenterVec3Pos() {
+        float centerX = (Points[2].x - Points[0].x) / 2;
+        float centerY = (Points[2].z - Points[0].z) / 2;
+        return new Vector3(Points[0].x + centerX,0, Points[0].z + centerY);
     }
 }

@@ -45,8 +45,8 @@ public class PathfindingManager : SingletonBehaviour<PathfindingManager>
     }
     public Node[] FindPath(Vector3 finder,Vector3 target) {
 
-        Node StartNode = MapManager.Instance.GetNodeFromWorldposition(finder);
-        Node EndNode = MapManager.Instance.GetNodeFromWorldposition(target);
+        Node StartNode = MapManager.Instance.m_Map.GetNodeFromWorldposition(finder);
+        Node EndNode = MapManager.Instance.m_Map.GetNodeFromWorldposition(target);
         if (StartNode.IsWalkable && StartNode != null && EndNode != null && EndNode.IsWalkable) {
             List<Node> Way = new List<Node>();
             Heap<Node> OpenList = new Heap<Node>(MapManager.Instance.MapXSize * MapManager.Instance.MapYSize);
@@ -80,7 +80,7 @@ public class PathfindingManager : SingletonBehaviour<PathfindingManager>
                     return ways;
                 }
 
-                Node[] neighborNodes = MapManager.Instance.GetNeighborTiles(node.X, node.Y, 1);
+                Node[] neighborNodes = MapManager.Instance.m_Map.GetNeighborTiles(node.X, node.Y, 1);
                 // 탐색 노드의 주변 노드 탐색
                 for (int i = 0; i < neighborNodes.Length; i++) {
                     Node neighborNode = neighborNodes[i];

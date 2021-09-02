@@ -9,7 +9,6 @@ public class TupleTest : MonoBehaviour
         (double, int) t1 = (4.5f, 1);
         Debug.Log(t1.Item1 + "  " + t1.Item2);
 
-        var t2 = ( Sum : 1, asdf: 2);
     }
 
 }

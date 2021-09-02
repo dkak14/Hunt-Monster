@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637651298098276800
-    m_Hash: 1865043027
+      ticks: 637659937445884858
+    m_Hash: 3500417078
   m_LockFileStatus:
     m_FilePath: C:/Users/wlstj/Desktop/UnityProjects/Hunt Monster/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637651298098901289
-    m_Hash: 2298882607
+      ticks: 637659937446034450
+    m_Hash: 120364252
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:
@@ -211,12 +211,12 @@ m_PackageAssets:
         url: git+https://github.com/Unity-Technologies/2d-extras.git
         revision: 1144e0bb9586c083fd0308672690f6359a6aebc7
         path: 
-    - packageId: com.unity.collab-proxy@1.5.7
+    - packageId: com.unity.collab-proxy@1.7.1
       testable: 0
       isDirectDependency: 1
-      version: 1.5.7
+      version: 1.7.1
       source: 1
-      resolvedPath: C:\Users\wlstj\Desktop\UnityProjects\Hunt Monster\Library\PackageCache\com.unity.collab-proxy@1.5.7
+      resolvedPath: C:\Users\wlstj\Desktop\UnityProjects\Hunt Monster\Library\PackageCache\com.unity.collab-proxy@1.7.1
       assetPath: Packages/com.unity.collab-proxy
       name: com.unity.collab-proxy
       displayName: Version Control
@@ -289,16 +289,19 @@ m_PackageAssets:
       - name: com.unity.nuget.newtonsoft-json
         version: 2.0.0
       keywords:
-      - vsc
-      - version
-      - control
-      - collab
-      - collaboration
-      - collaborate
-      - teams
-      - team
-      - cloud
       - backup
+      - cloud
+      - collab
+      - collaborate
+      - collaboration
+      - control
+      - plastic
+      - plasticscm
+      - source
+      - team
+      - teams
+      - version
+      - vcs
       registry:
         id: main
         name: 
@@ -311,13 +314,13 @@ m_PackageAssets:
       entitlements:
         isAllowed: 1
       isAssetStorePackage: 0
-      datePublishedTicks: 637551413290000000
+      datePublishedTicks: 637616921650000000
       documentationUrl: 
       hasRepository: 1
       repository:
         type: git
         url: https://github.cds.internal.unity3d.com/unity/com.unity.cloud.collaborate.git
-        revision: f079d307344f568804d3ea6d781013135e614e45
+        revision: 30ef59f552633de9ff0401db4e73ac89982d4ac0
         path: 
     - packageId: com.unity.ide.rider@2.0.7
       testable: 0
@@ -398,7 +401,7 @@ m_PackageAssets:
         version: 1.1.1
       resolvedDependencies:
       - name: com.unity.test-framework
-        version: 1.1.26
+        version: 1.1.27
       - name: com.unity.ext.nunit
         version: 1.0.6
       - name: com.unity.modules.imgui
@@ -485,7 +488,7 @@ m_PackageAssets:
         version: 1.1.9
       resolvedDependencies:
       - name: com.unity.test-framework
-        version: 1.1.26
+        version: 1.1.27
       - name: com.unity.ext.nunit
         version: 1.0.6
       - name: com.unity.modules.imgui
@@ -582,12 +585,12 @@ m_PackageAssets:
         url: https://github.cds.internal.unity3d.com/unity/com.unity.ide.vscode.git
         revision: b5ec9b38109e52b1b26597d521e4df75e042ebb9
         path: 
-    - packageId: com.unity.test-framework@1.1.26
+    - packageId: com.unity.test-framework@1.1.27
       testable: 0
       isDirectDependency: 1
-      version: 1.1.26
+      version: 1.1.27
       source: 1
-      resolvedPath: C:\Users\wlstj\Desktop\UnityProjects\Hunt Monster\Library\PackageCache\com.unity.test-framework@1.1.26
+      resolvedPath: C:\Users\wlstj\Desktop\UnityProjects\Hunt Monster\Library\PackageCache\com.unity.test-framework@1.1.27
       assetPath: Packages/com.unity.test-framework
       name: com.unity.test-framework
       displayName: Test Framework
@@ -667,13 +670,13 @@ m_PackageAssets:
       entitlements:
         isAllowed: 1
       isAssetStorePackage: 0
-      datePublishedTicks: 637576439750000000
+      datePublishedTicks: 637594751620000000
       documentationUrl: 
       hasRepository: 1
       repository:
         type: git
         url: git+https://github.com/Unity-Technologies/com.unity.test-framework.git
-        revision: ea9d07e64e6d63c4f2fd8b6bc57df0f452ff4fae
+        revision: c2f2cc9b7ea61d42964257363595dff5e8c47c42
         path: 
     - packageId: com.unity.textmeshpro@3.0.6
       testable: 0

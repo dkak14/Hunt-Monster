@@ -10,7 +10,6 @@ public class ZoneEditor : Editor
 
     protected virtual void OnEnable() {
         zone = (Zone)target;
-        Debug.Log("asdsad");
         zone.transform.gameObject.layer = LayerMask.NameToLayer("UI");
 
         zone.meshFilter = zone.GetComponent<MeshFilter>();

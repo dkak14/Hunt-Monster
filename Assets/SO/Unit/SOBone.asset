@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Bone
   minimapIcon: {fileID: 21300000, guid: 4d7eb22b82adc484c9113e8e2c2d6468, type: 3}
-  dieEffect: {fileID: 1279958246892627673, guid: c19390bba27bca142960915751438f72, type: 3}
+  dieEffect: BoneDie
   iconSize: 4
   maxHp: 50
   attackDamage: 40

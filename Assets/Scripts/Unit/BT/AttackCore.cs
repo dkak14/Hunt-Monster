@@ -92,6 +92,11 @@ namespace BT {
             if (Way != null) {
                 if (CurrentWayIndex < Way.Length) {
                     float Dst = Vector2.Distance(Way[CurrentWayIndex].WorldVec2Position, monster.GetVec2Position());
+                    if(Dst > 2) {
+                        needFindNewPath = true;
+                        return;
+                    }
+
                     if (Dst < 0.5f) {
                         CurrentWayIndex++;
                         return;

@@ -7,25 +7,29 @@ using TMPro;
 using Zenject;
 public class StartTimer : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI TimeText;
+    [SerializeField] Image TimeImage;
+    [SerializeField] Image TimerEndImage;
+    [SerializeField] Sprite[] sprites;
     [SerializeField] int Time;
-    [Inject] IPlaySound PlaySound;
+    //[Inject] IPlaySound PlaySound;
     void Start()
     {
         StartCoroutine(C_StartTime(Time));
     }
     IEnumerator C_StartTime(int time) {
-        Vector3 scale = TimeText.rectTransform.localScale;
+        TimeImage.color = new Color(1, 1, 1, 1);
+        Vector3 scale = TimeImage.rectTransform.localScale;
         while (time > 0) {
-            TimeText.text = time.ToString();
-            TimeText.rectTransform.localScale = scale * 1.5f;
-            TimeText.rectTransform.DOScale(scale.y, 1);
-            yield return new WaitForSeconds(1f);
+            TimeImage.sprite = sprites[time - 1];
+            TimeImage.rectTransform.localScale = scale * 1.5f;
+            TimeImage.rectTransform.DOScale(scale.y, 1);
             time--;
+            yield return new WaitForSeconds(1f);
         }
-        TimeText.text = "Start";
-        TimeText.rectTransform.localScale = scale * 1.5f;
-        TimeText.rectTransform.DOScale(scale.y, 1).OnComplete(()=>TimeText.gameObject.SetActive(false));
+        TimeImage.gameObject.SetActive(false);
+        TimerEndImage.gameObject.SetActive(true);
+        TimerEndImage.rectTransform.localScale = scale;
+        TimerEndImage.rectTransform.DOScale(scale.y, 1.001f).OnComplete(() => TimerEndImage.gameObject.SetActive(false)).SetEase(Ease.OutQuint);
         EventManager<GameEvent>.Instance.PostEvent(GameEvent.TimerEnd, this, null);
     }
 }

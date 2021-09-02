@@ -1,2 +1,0 @@
-C:\Users\wlstj\Desktop\UnityProjects\Hunt Monster\obj\Debug\Assembly-CSharp.csproj.AssemblyReference.cache
-C:\Users\wlstj\Desktop\UnityProjects\Hunt Monster\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache

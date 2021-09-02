@@ -13,10 +13,23 @@ public class Barricade : Unit
     [Inject] IPlaySound PlaySound;
     public override void Awake() {
         Init();
-        DieEvent += (unit) => { PlaySound.PlayOneShot(SoundType.SFX, "BarricadeBreak"); BarricadeContainer.gameObject.SetActive(false); unitCollider.enabled = false; };
+        DieEvent += (unit) => { PlaySound.PlayOneShot(SoundType.SFX, "BarricadeBreak");
+            //for (int x = -1; x <= 1; x++) {
+            //    for (int y = -1; y <= 1; y++) {
+            //        if (x != 0 || y != 0) {
+            //            Vector3 spawnPos = transform.position + (Vector3.forward * x * unitCollider.bounds.size.x * 0.5f) * Random.Range(0.8f, 1.2f)
+            //            + (Vector3.right * y * unitCollider.bounds.size.z * 0.5f) * Random.Range(0.8f, 1.2f);
+            //            ParticleSpawn.SpawnParticle("BarricadeBreak", spawnPos);
+            //        }
+            //    }
+            //}
+            ParticleSpawn.SpawnParticle("BarricadeBreak", transform.position + Vector3.up );
+            BarricadeContainer.gameObject.SetActive(false); 
+            unitCollider.enabled = false; };
         BarricadeContainer.gameObject.SetActive(false);
         EventManager<ShopEvent>.Instance.AddListener(ShopEvent.BuyWallHealItem, this, HealWall);
         EventManager<ShopEvent>.Instance.AddListener(ShopEvent.BuyWallItem, this, BuyWall);
+
     }
     void Start() {
         HpValueChangeEvent += (Unit unit) => { EventManager<GameEvent>.Instance.PostEvent(GameEvent.WallHPChange, this, null); };

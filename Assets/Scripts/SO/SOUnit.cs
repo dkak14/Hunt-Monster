@@ -10,8 +10,8 @@ public class SOUnit : ScriptableObject
     // 미니맵 아이콘
     [SerializeField] Sprite minimapIcon;
     public Sprite MinimapIcon => minimapIcon;
-    [SerializeField] ParticleSystem dieEffect;
-    public ParticleSystem DieEffect => dieEffect;
+    [SerializeField] string dieEffect;
+    public string DieEffect => dieEffect;
     // 미니맵 아이콘 사이즈
     [SerializeField] float iconSize;
     public float IconSize => iconSize;

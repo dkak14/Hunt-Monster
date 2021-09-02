@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Monster
   minimapIcon: {fileID: 0}
-  dieEffect: {fileID: 0}
+  dieEffect: ZombieDie
   iconSize: 0
   maxHp: 5
   attackDamage: 0

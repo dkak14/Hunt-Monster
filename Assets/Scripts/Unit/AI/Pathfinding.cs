@@ -5,10 +5,10 @@ using UnityEngine;
 using System.Threading;
 public static class Pathfinding
 {
-    public static Node[] FindPath(Transform finder,Transform target) {
+    public static Node[] FindPath(Map map, Transform finder,Transform target) {
 
-        Node StartNode = MapManager.Instance.GetNodeFromWorldposition(finder.position);
-        Node EndNode = MapManager.Instance.GetNodeFromWorldposition(target.position);
+        Node StartNode = map.GetNodeFromWorldposition(finder.position);
+        Node EndNode = map.GetNodeFromWorldposition(target.position);
         if (StartNode.IsWalkable && StartNode != null && EndNode != null && EndNode.IsWalkable) {
             List<Node> Way = new List<Node>();
             Heap<Node> OpenList = new Heap<Node>(MapManager.Instance.MapXSize * MapManager.Instance.MapYSize);
@@ -42,7 +42,7 @@ public static class Pathfinding
                     return ways;
                 }
 
-                Node[] neighborNodes = MapManager.Instance.GetNeighborTiles(node.X, node.Y, 1);
+                Node[] neighborNodes = map.GetNeighborTiles(node.X, node.Y, 1);
                 // 탐색 노드의 주변 노드 탐색
                 for (int i = 0; i < neighborNodes.Length; i++) {
                     Node neighborNode = neighborNodes[i];

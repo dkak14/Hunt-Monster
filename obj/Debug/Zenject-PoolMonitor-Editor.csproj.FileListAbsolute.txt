@@ -1,2 +1,0 @@
-C:\Users\wlstj\Desktop\UnityProjects\Hunt Monster\obj\Debug\Zenject-PoolMonitor-Editor.csproj.AssemblyReference.cache
-C:\Users\wlstj\Desktop\UnityProjects\Hunt Monster\obj\Debug\Zenject-PoolMonitor-Editor.csproj.CoreCompileInputs.cache

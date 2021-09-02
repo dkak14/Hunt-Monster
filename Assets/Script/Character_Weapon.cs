@@ -26,16 +26,16 @@ public class Character_Weapon : MonoBehaviour
     public void Weapon_Shot()
     {
         if (shotCul <= 0) {
-            Debug.Log("ÃÑ¾Ë ¹ß»ç" + WeaponData.Speed);
+            if (ShotBulet != null)
+                ShotBulet();
             Bullet bullet_object = Instantiate(bullet, FirePosition.position, Quaternion.identity);
+            Debug.Log("ÃÑ¾Ë ¹ß»ç" + bullet_object.name);
             bullet_object.transform.eulerAngles = new Vector3(0,transform.eulerAngles.y,0);
             bullet_object.BulletSet(WeaponData);
             bullet_object.GetComponent<Rigidbody>().AddForce(transform.right * WeaponData.Speed);
             PlaySound.PlayOneShot(SoundType.SFX, "GunShot");
             WeaponData.Shot = false;
             shotCul = ShotCul;
-            if (ShotBulet != null)
-                ShotBulet();
             StartCoroutine(ShotCulTime());
         }
     }

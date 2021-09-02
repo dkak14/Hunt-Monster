@@ -36,6 +36,7 @@ public abstract class Unit : MonoBehaviour
     public Action StunEnd;
     protected bool isStun;
     [Inject] MinimapIcon minimapIconObject;
+    [Inject] protected ParticleSpawner ParticleSpawn;
     public virtual void Awake() {
         Init();
         if (SOUnitData.MinimapIcon != null) {
@@ -154,9 +155,8 @@ public abstract class Unit : MonoBehaviour
 
         float time = DieEffect();
         if (SOUnitData.DieEffect != null) {
-            ParticleSystem particle = Instantiate(SOUnitData.DieEffect, transform.position, Quaternion.identity);
-            Debug.Log("ÀÌÆåÆ® ¼ÒÈ¯" + particle.main.duration + 0.5f);
-            Destroy(particle.gameObject, particle.main.duration + 0.5f);
+            if(SOUnitData.DieEffect.Length > 0)
+            ParticleSpawn.SpawnParticle(SOUnitData.DieEffect, transform.position);
         }
         StartCoroutine(C_Die(time));
     }
